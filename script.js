@@ -4,9 +4,13 @@ const progressBar = document.querySelector(".progress-bar");
 const soundBar = document.querySelector(".sound-bar");
 const currTime = document.getElementById("curr-time");
 const totTime = document.getElementById("tot-time");
+const muteButton = document.getElementById("mute-button"); 
+const backwardButton = document.getElementById("backward-button"); // Backward button
+const forwardButton = document.getElementById("forward-button"); // Forward button
 
 // Variables
 let isPlaying = false;
+let isMuted = false;  // Keep track of mute state
 let currentAudio = new Audio("./assets/sample.mp3"); // Replace with your audio file path
 currentAudio.addEventListener("loadedmetadata", () => {
   totTime.textContent = formatTime(currentAudio.duration);
@@ -39,7 +43,34 @@ progressBar.addEventListener("input", () => {
 
 // Volume control
 soundBar.addEventListener("input", () => {
-  currentAudio.volume = soundBar.value / 100;
+  if (!isMuted) {
+    currentAudio.volume = soundBar.value / 100;
+  }
+});
+
+// Mute/Unmute functionality
+muteButton.addEventListener("click", () => {
+  if (isMuted) {
+    currentAudio.muted = false; // Unmute
+    muteButton.src = "./assets/controls_icon_mute.png"; // Replace with unmute icon
+    soundBar.value = currentAudio.volume * 100; // Restore previous volume
+  } else {
+    currentAudio.muted = true; // Mute
+    muteButton.src = "./assets/controls_icon_unmute.png"; // Replace with mute icon
+    soundBar.value = 0; // Set volume to 0 when muted
+  }
+  isMuted = !isMuted;
+});
+
+forwardButton.addEventListener("click", () => {
+  currentAudio.currentTime = Math.min(currentAudio.currentTime + 10, currentAudio.duration); 
+  // Ensure it doesn't exceed the duration
+});
+
+// Backward Button: Skip 10 seconds backward
+backwardButton.addEventListener("click", () => {
+  currentAudio.currentTime = Math.max(currentAudio.currentTime - 10, 0); 
+  // Ensure it doesn't go below 0
 });
 
 // Utility function to format time
