@@ -1,4 +1,3 @@
-// Select elements
 const playButton = document.querySelector(".player-control-icon:nth-child(3)");
 const progressBar = document.querySelector(".progress-bar");
 const soundBar = document.querySelector(".sound-bar");
@@ -11,25 +10,129 @@ const prevButton = document.getElementById("prev-button");
 const nextButton = document.getElementById("next-button");
 const shuffleButton = document.getElementById("shuffle-button");
 const repeatButton = document.getElementById("repeat-button");
+const cardsContainer = document.getElementById("cards-container");
+const albumPicture = document.getElementById("album-picture");
+const albumTitle = document.getElementById("album-title");
+const albumArtist = document.getElementById("album-artist");
 
-// Array of tracks
 const tracks = [
-  "./assets/sample.mp3",
-  "./assets/sample1.mp3",
-  "./assets/sample2.mp3",
+  {
+    title: "Top 50 - Global",
+    info: "Your daily updates of the most played...",
+    image: "./assets/card1img.jpeg",
+    audio: "./assets/sample.mp3",
+  },
+  {
+    title: "Top 50 - India",
+    info: "The most trending music in India.",
+    image: "./assets/card2img.jpeg",
+    audio: "./assets/sample1.mp3",
+  },
+  {
+    title: "Top 50 - USA",
+    info: "The top charts from USA.",
+    image: "./assets/card3img.jpeg",
+    audio: "./assets/sample2.mp3",
+  },
+  {
+    title: "Top 50 - UK",
+    info: "The UK’s hottest tracks of the week.",
+    image: "./assets/card4img.jpeg",
+    audio: "./assets/sample.mp3",
+  },
+  {
+    title: "Top 50 - Australia",
+    info: "Australia's trending music.",
+    image: "./assets/card5img.jpeg",
+    audio: "./assets/sample1.mp3",
+  },
+  {
+    title: "Top 50 - France",
+    info: "The top French songs right now.",
+    image: "./assets/card6img.jpeg",
+    audio: "./assets/sample2.mp3",
+  },
 ];
-let shuffledTracks = [...tracks]; // Copy of the original tracks
-let playedTracks = []; // To keep track of played songs
-// Get saved state from localStorage
+
+let activePlayPauseButton = null;
+
+function generateCards() {
+  tracks.forEach((track, index) => {
+    const card = document.createElement("div");
+    card.classList.add("card");
+
+    const img = document.createElement("img");
+    img.src = track.image;
+    img.alt = track.title;
+    img.classList.add("card-image");
+
+    const cardContent = document.createElement("div");
+    cardContent.classList.add("card-content");
+
+    const title = document.createElement("h3");
+    title.textContent = track.title;
+    title.classList.add("card-title");
+
+    const info = document.createElement("p");
+    info.textContent = track.info;
+    info.classList.add("card-info");
+
+    const playPauseButton = document.createElement("button");
+    playPauseButton.textContent = "Play";
+    playPauseButton.classList.add("play-icon");
+
+    playPauseButton.addEventListener("click", () => {
+      if (isPlaying && currentTrackIndex === index) {
+        currentAudio.pause();
+        playPauseButton.textContent = "Play";
+        playButton.src = "./assets/player_icon3.png";
+        isPlaying = false;
+      } else {
+        // Reset the previous play/pause button if it exists
+        if (
+          activePlayPauseButton &&
+          activePlayPauseButton !== playPauseButton
+        ) {
+          activePlayPauseButton.textContent = "Play";
+        }
+
+        currentTrackIndex = index; // Update track index
+        loadTrack(); // Load and play the selected track
+        playPauseButton.textContent = "Pause"; // Update button text
+        playButton.src = "./assets/pause-button-icon.png";
+        isPlaying = true;
+
+        activePlayPauseButton = playPauseButton; // Update the active button
+      }
+      localStorage.setItem("currentTrackIndex", currentTrackIndex);
+    });
+
+    cardContent.appendChild(title);
+    cardContent.appendChild(info);
+    cardContent.appendChild(playPauseButton);
+    card.appendChild(img);
+    card.appendChild(cardContent);
+    cardsContainer.appendChild(card);
+  });
+}
+
+// Call the function to generate the cards
+generateCards();
+
+let shuffledTracks = [...tracks];
+let playedTracks = [];
 let currentTrackIndex =
   parseInt(localStorage.getItem("currentTrackIndex")) || 0;
 let isMuted = localStorage.getItem("isMuted") === "true";
 let isPlaying = false;
-let isShuffle = false; // Shuffle mode state
-let repeatMode = 0; // Repeat mode: 0 - no repeat, 1 - repeat track, 2 - repeat playlist
-
+let isShuffle = localStorage.getItem("isShuffle") === "true"; // Load shuffle state
+let repeatMode = parseInt(localStorage.getItem("repeatMode")) || 0; // Load repeat mode state
+let currentTime = parseFloat(localStorage.getItem("currentTime")) || 0;
+let volume = parseFloat(localStorage.getItem("volume")) || 1; // Load saved volume
 // Create a new audio element
-let currentAudio = new Audio(tracks[currentTrackIndex]);
+let currentAudio = new Audio(tracks[currentTrackIndex].audio);
+currentAudio.currentTime = currentTime;
+currentAudio.volume = volume; // Set initial volume from localStorage
 
 // Load metadata for the first track and set mute state
 currentAudio.addEventListener("loadedmetadata", () => {
@@ -41,6 +144,9 @@ currentAudio.addEventListener("loadedmetadata", () => {
 
   // Update the mute button to show "unmute" icon
   muteButton.src = "./assets/controls_icon_unmute.png";
+
+  soundBar.value = volume * 100; // Set saved volume
+  currentAudio.volume = volume;
 
   // Save the unmuted state in localStorage
   localStorage.setItem("isMuted", isMuted);
@@ -56,6 +162,7 @@ playButton.addEventListener("click", () => {
     playButton.src = "./assets/pause-button-icon.png";
   }
   isPlaying = !isPlaying;
+  localStorage.setItem("isPlaying", isPlaying);
 });
 
 // Update progress bar
@@ -63,18 +170,21 @@ currentAudio.addEventListener("timeupdate", () => {
   const progress = (currentAudio.currentTime / currentAudio.duration) * 100;
   progressBar.value = progress;
   currTime.textContent = formatTime(currentAudio.currentTime);
+  localStorage.setItem("currentTime", currentAudio.currentTime);
 });
 
 // Seek functionality
 progressBar.addEventListener("input", () => {
   const seekTime = (progressBar.value / 100) * currentAudio.duration;
   currentAudio.currentTime = seekTime;
+  localStorage.setItem("currentTime", currentAudio.currentTime);
 });
 
 // Volume control
 soundBar.addEventListener("input", () => {
   if (!isMuted) {
     currentAudio.volume = soundBar.value / 100;
+    localStorage.setItem("volume", currentAudio.volume);
   }
 });
 
@@ -93,19 +203,45 @@ function updateMuteButtonIcon() {
     : "./assets/controls_icon_unmute.png";
 }
 
+function updatePlayerUI(trackIndex) {
+  const track = tracks[trackIndex];
+
+  // Update album picture, title, and artist info
+  albumPicture.src = track.image;
+  albumTitle.textContent = track.title;
+  albumArtist.textContent = track.info;
+}
+
 // Load and play current track
+// After loading the track, apply all the saved states
 function loadTrack() {
+  // Load and play the selected track
   currentAudio.pause();
-  currentAudio = new Audio(tracks[currentTrackIndex]);
+  currentAudio = new Audio(tracks[currentTrackIndex].audio);
   currentAudio.muted = isMuted;
   localStorage.setItem("currentTrackIndex", currentTrackIndex);
+
+  updatePlayerUI(currentTrackIndex);
+
+  // Update the play button based on the saved isPlaying state
+  if (isPlaying) {
+    playButton.src = "./assets/pause-button-icon.png";
+    currentAudio.play();
+  } else {
+    playButton.src = "./assets/player_icon3.png";
+  }
+
+  // Update volume from localStorage
+  currentAudio.volume = volume;
+  soundBar.value = volume * 100;
 
   currentAudio.addEventListener("loadedmetadata", () => {
     totTime.textContent = formatTime(currentAudio.duration);
     currentAudio.play();
-    playButton.src = "./assets/pause-button-icon.png";
-    isPlaying = true;
-    updateMuteButtonIcon();
+    playButton.src = isPlaying
+      ? "./assets/pause-button-icon.png"
+      : "./assets/player_icon3.png";
+    updateMuteButtonIcon(); // Update mute button state
   });
 
   currentAudio.addEventListener("timeupdate", () => {
@@ -126,7 +262,21 @@ function loadTrack() {
       nextTrack(); // Regular progression to the next track
     }
   });
+
+  // Update shuffle button
+  shuffleButton.classList.toggle("active", isShuffle);
+  shuffleButton.src = isShuffle
+    ? "./assets/shuffle_active.png"
+    : "./assets/player_icon1.png";
+
+  // Update repeat button
+  updateRepeatButtonIcon();
 }
+
+// Ensure all settings (volume, track, mute, etc.) are initialized correctly on page load
+window.addEventListener("load", () => {
+  loadTrack();
+});
 
 // Shuffle functionality
 shuffleButton.addEventListener("click", () => {
@@ -135,6 +285,7 @@ shuffleButton.addEventListener("click", () => {
   if (isShuffle) {
     shufflePlaylist(); // Shuffle tracks when shuffle is enabled
   }
+  localStorage.setItem("isShuffle", isShuffle);
   shuffleButton.src = isShuffle
     ? "./assets/shuffle_active.png"
     : "./assets/player_icon1.png";
@@ -157,6 +308,7 @@ function shufflePlaylist() {
 repeatButton.addEventListener("click", () => {
   repeatMode = (repeatMode + 1) % 3; // Cycle through repeat modes
   updateRepeatButtonIcon();
+  localStorage.setItem("repeatMode", repeatMode);
 });
 
 // Update repeat button icon
@@ -241,6 +393,3 @@ function formatTime(seconds) {
     .padStart(2, "0");
   return `${mins}:${secs}`;
 }
-
-// Load initial track
-loadTrack();

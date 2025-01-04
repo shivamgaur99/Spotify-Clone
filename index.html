@@ -2,25 +2,25 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
         integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="shortcut icon" href="./assets/logo.png" type="image/x-icon">
+    <link rel="shortcut icon" href="./assets/logo.png" type="image/x-icon" />
     <title>Spotify - Web Player: Music for everyone</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
-        rel="stylesheet">
+        rel="stylesheet" />
 </head>
 
 <body>
     <div class="main">
         <div class="sidebar">
             <div class="nav">
-                <div class="nav-option" style="opacity: 1;">
+                <div class="nav-option" style="opacity: 1">
                     <i class="fa-solid fa-house"></i>
                     <a href="#">Home</a>
                 </div>
@@ -32,7 +32,7 @@
             <div class="library">
                 <div class="options">
                     <div class="lib-option nav-option">
-                        <img src="./assets/library_icon.png" alt="...">
+                        <img src="./assets/library_icon.png" alt="..." />
                         <a href="#">Your Library</a>
                     </div>
                     <div class="icons">
@@ -57,13 +57,14 @@
         <div class="main-content">
             <div class="sticky-nav">
                 <div class="sticky-nav-icons">
-                    <img src="./assets/backward_icon.png">
-                    <img src="./assets/forward_icon.png" class="hide">
+                    <img src="./assets/backward_icon.png" />
+                    <img src="./assets/forward_icon.png" class="hide" />
                 </div>
                 <div class="sticky-nav-options">
                     <button class="badge nav-item hide">Explore Premium</button>
-                    <button class="badge nav-item dark-badge"><i class="fa-regular fa-circle-down"
-                            style="margin-right: 5px;"></i>Install App</button>
+                    <button class="badge nav-item dark-badge">
+                        <i class="fa-regular fa-circle-down" style="margin-right: 5px"></i>Install App
+                    </button>
                     <i class="fa-regular fa-user nav-item"></i>
                 </div>
             </div>
@@ -71,55 +72,31 @@
             <h2>Recently Played</h2>
             <div class="cards-container">
                 <div class="card">
-                    <img src="./assets/card1img.jpeg" class="card-img">
+                    <img src="./assets/card1img.jpeg" class="card-img" />
                     <p class="card-title">Top 50 - Global</p>
                     <p class="card-info">Your daily updates of the most played...</p>
                 </div>
             </div>
 
             <h2>Trending now near you</h2>
-            <div class="cards-container">
-                <div class="card">
-                    <img src="./assets/card2img.jpeg" class="card-img">
-                    <p class="card-title">Top 50 - Global</p>
-                    <p class="card-info">Your daily updates of the most played...</p>
-                </div>
-                <div class="card">
-                    <img src="./assets/card3img.jpeg" class="card-img">
-                    <p class="card-title">Top 50 - Global</p>
-                    <p class="card-info">Your daily updates of the most played...</p>
-                </div>
-                <div class="card">
-                    <img src="./assets/card4img.jpeg" class="card-img">
-                    <p class="card-title">Top 50 - Global</p>
-                    <p class="card-info">Your daily updates of the most played...</p>
-                </div>
-                <div class="card">
-                    <img src="./assets/card3img.jpeg" class="card-img">
-                    <p class="card-title">Top 50 - Global</p>
-                    <p class="card-info">Your daily updates of the most played...</p>
-                </div>
-                <div class="card">
-                    <img src="./assets/card4img.jpeg" class="card-img">
-                    <p class="card-title">Top 50 - Global</p>
-                    <p class="card-info">Your daily updates of the most played...</p>
-                </div>
+            <div class="cards-container" id="cards-container">
+                <!-- Cards will be dynamically inserted here -->
             </div>
 
             <h2>Featured Image</h2>
             <div class="cards-container">
                 <div class="card">
-                    <img src="./assets/card5img.jpeg" class="card-img">
+                    <img src="./assets/card5img.jpeg" class="card-img" />
                     <p class="card-title">Top Songs - Global</p>
                     <p class="card-info">Your daily updates of the most played...</p>
                 </div>
                 <div class="card">
-                    <img src="./assets/card6img.jpeg" class="card-img">
+                    <img src="./assets/card6img.jpeg" class="card-img" />
                     <p class="card-title">Top Songs - India</p>
                     <p class="card-info">Your daily updates of the most played...</p>
                 </div>
                 <div class="card">
-                    <img src="./assets/card1img.jpeg" class="card-img">
+                    <img src="./assets/card1img.jpeg" class="card-img" />
                     <p class="card-title">Top 50 - Global</p>
                     <p class="card-info">Your daily updates of the most played...</p>
                 </div>
@@ -130,42 +107,46 @@
         </div>
         <div class="music-player">
             <div class="album">
-                <img src="./assets/album_picture.jpeg" style="width: 56px; height: 56px;">
+                <img id="album-picture" src="./assets/album_picture.jpeg" style="width: 56px; height: 56px" />
                 <div class="album-info">
-                    <p style="font-size: 14px; font-weight: 600;">Daylight</p>
-                    <p style="font-size: 12px; opacity: 0.75; line-height: 0;">David Kushner</p>
+                    <p id="album-title" style="font-size: 14px; font-weight: 600">
+                        Daylight
+                    </p>
+                    <p id="album-artist" style="font-size: 12px; opacity: 0.75; line-height: 0">
+                        David Kushner
+                    </p>
                 </div>
-                <img src="./assets/album_icon1.png" class="album-icon" style="height: 1.25rem;">
-                <img src="./assets/album_icon2.png" class="album-icon" style="height: 1.75rem;">
+                <img id="album-icon1" src="./assets/album_icon1.png" class="album-icon" style="height: 1.25rem" />
+                <img id="album-icon2" src="./assets/album_icon2.png" class="album-icon" style="height: 1.75rem" />
             </div>
             <div class="player">
                 <div class="player-controls">
-                    <img src="./assets/player_icon1.png" id="shuffle-button" class="player-control-icon">
-                    <img src="./assets/player_icon2.png" id="prev-button" class="player-control-icon">
-                    <img src="./assets/player_icon3.png" class="player-control-icon" style="opacity: 1; height: 2rem;">
-                    <img src="./assets/player_icon4.png" id="next-button" class="player-control-icon">
-                    <img src="./assets/repeat_off_icon.png" id="repeat-button" class="player-control-icon">
+                    <img src="./assets/player_icon1.png" id="shuffle-button" class="player-control-icon" />
+                    <img src="./assets/player_icon2.png" id="prev-button" class="player-control-icon" />
+                    <img src="./assets/player_icon3.png" class="player-control-icon" style="opacity: 1; height: 2rem" />
+                    <img src="./assets/player_icon4.png" id="next-button" class="player-control-icon" />
+                    <img src="./assets/repeat_off_icon.png" id="repeat-button" class="player-control-icon" />
                 </div>
                 <div class="playback-bar">
                     <span id="curr-time">0:00</span>
-                    <input type="range" min="0" max="100" step="1" class="progress-bar">
-                    <span id="tot-time">3:00</span>
+                    <input type="range" min="0" max="100" step="1" class="progress-bar" value="0" />
+                    <span id="tot-time">0:00</span>
                 </div>
             </div>
             <div class="controls">
-                <img src="./assets/controls_icon1.png" class="control-icon" style="height: 2rem;">
-                <img src="./assets/controld_icon2.png" class="control-icon" style="height: 2rem;">
-                <img src="./assets/controls_icon3.png" class="control-icon">
-                <img src="./assets/controls_icon4.png" class="control-icon">
-                <img src="./assets/controls_icon_mute.png" alt="Mute" class="control-icon" id="mute-button">
-                <input type="range" min="0" max="100" step="1" class="sound-bar">
-                <img src="./assets/" alt="">
-                <img src="./assets/controls_icon6.png" alt="" class="control-icon">
-                <img src="./assets/controls_icon7.png" alt="" class="control-icon">
+                <img src="./assets/controls_icon1.png" class="control-icon" style="height: 2rem" />
+                <img src="./assets/controld_icon2.png" class="control-icon" style="height: 2rem" />
+                <img src="./assets/controls_icon3.png" class="control-icon" />
+                <img src="./assets/controls_icon4.png" class="control-icon" />
+                <img src="./assets/controls_icon_mute.png" alt="Mute" class="control-icon" id="mute-button" />
+                <input type="range" min="0" max="100" step="1" class="sound-bar" />
+                <img src="./assets/" alt="" />
+                <img src="./assets/controls_icon6.png" alt="" class="control-icon" />
+                <img src="./assets/controls_icon7.png" alt="" class="control-icon" />
             </div>
         </div>
     </div>
-    <script src="script.js"></script> 
+    <script src="script.js"></script>
 </body>
 
 </html>
