@@ -14,6 +14,10 @@ const cardsContainer = document.getElementById("cards-container");
 const albumPicture = document.getElementById("album-picture");
 const albumTitle = document.getElementById("album-title");
 const albumArtist = document.getElementById("album-artist");
+const albumIcon = document.getElementById("album-icon1");
+const carousel = document.getElementById("carousel");
+const prevBtn = document.getElementById("prev-btn");
+const nextBtn = document.getElementById("next-btn");
 
 const tracks = [
   {
@@ -56,7 +60,11 @@ const tracks = [
 
 let activePlayPauseButton = null;
 
+const tracksPerScroll = 3; // Number of tracks to scroll per click
+
 function generateCards() {
+  carousel.innerHTML = ""; // Clear existing cards
+
   tracks.forEach((track, index) => {
     const card = document.createElement("div");
     card.classList.add("card");
@@ -64,7 +72,7 @@ function generateCards() {
     const img = document.createElement("img");
     img.src = track.image;
     img.alt = track.title;
-    img.classList.add("card-image");
+    img.classList.add("card-img");
 
     const cardContent = document.createElement("div");
     cardContent.classList.add("card-content");
@@ -78,13 +86,13 @@ function generateCards() {
     info.classList.add("card-info");
 
     const playPauseButton = document.createElement("button");
-    playPauseButton.textContent = "Play";
     playPauseButton.classList.add("play-icon");
+    playPauseButton.innerHTML = '<i class="fas fa-play"></i>';
 
     playPauseButton.addEventListener("click", () => {
       if (isPlaying && currentTrackIndex === index) {
         currentAudio.pause();
-        playPauseButton.textContent = "Play";
+        playPauseButton.innerHTML = '<i class="fas fa-play"></i>'; // Show play icon
         playButton.src = "./assets/player_icon3.png";
         isPlaying = false;
       } else {
@@ -93,12 +101,12 @@ function generateCards() {
           activePlayPauseButton &&
           activePlayPauseButton !== playPauseButton
         ) {
-          activePlayPauseButton.textContent = "Play";
+          activePlayPauseButton.innerHTML = '<i class="fas fa-play"></i>'; // Show play icon
         }
 
         currentTrackIndex = index; // Update track index
         loadTrack(); // Load and play the selected track
-        playPauseButton.textContent = "Pause"; // Update button text
+        playPauseButton.innerHTML = '<i class="fas fa-pause"></i>'; // Show pause icon
         playButton.src = "./assets/pause-button-icon.png";
         isPlaying = true;
 
@@ -112,11 +120,37 @@ function generateCards() {
     cardContent.appendChild(playPauseButton);
     card.appendChild(img);
     card.appendChild(cardContent);
-    cardsContainer.appendChild(card);
+    carousel.appendChild(card);
   });
+
+  updateButtons();
 }
 
-// Call the function to generate the cards
+// Scroll carousel to the next set of cards
+nextBtn.addEventListener("click", () => {
+  const cardWidth = document.querySelector(".card").offsetWidth;
+  const scrollAmount = cardWidth * tracksPerScroll + 20 * tracksPerScroll; // Include gap
+  carousel.scrollBy({ left: scrollAmount, behavior: "smooth" });
+  setTimeout(updateButtons, 500); // Update buttons after scrolling
+});
+
+// Scroll carousel to the previous set of cards
+prevBtn.addEventListener("click", () => {
+  const cardWidth = document.querySelector(".card").offsetWidth;
+  const scrollAmount = cardWidth * tracksPerScroll + 20 * tracksPerScroll; // Include gap
+  carousel.scrollBy({ left: -scrollAmount, behavior: "smooth" });
+  setTimeout(updateButtons, 500); // Update buttons after scrolling
+});
+
+// Disable/enable navigation buttons based on the scroll position
+function updateButtons() {
+  prevBtn.disabled = carousel.scrollLeft === 0;
+  nextBtn.disabled =
+    Math.ceil(carousel.scrollLeft + carousel.offsetWidth) >=
+    carousel.scrollWidth;
+}
+
+// Generate the initial carousel
 generateCards();
 
 let shuffledTracks = [...tracks];
@@ -137,7 +171,9 @@ currentAudio.volume = volume; // Set initial volume from localStorage
 // Load metadata for the first track and set mute state
 currentAudio.addEventListener("loadedmetadata", () => {
   totTime.textContent = formatTime(currentAudio.duration);
-
+  if (isPlaying) {
+    currentAudio.play(); // Ensure it plays if it's in play state
+  }
   // Always reset to unmuted state after page refresh
   isMuted = false;
   currentAudio.muted = isMuted;
@@ -203,6 +239,34 @@ function updateMuteButtonIcon() {
     : "./assets/controls_icon_unmute.png";
 }
 
+if (localStorage.getItem("heartState") === "filled") {
+  albumIcon.classList.remove("far");
+  albumIcon.classList.add("fas");
+  albumIcon.style.color = "#1DB954"; // Spotify Green
+} else {
+  albumIcon.classList.remove("fas");
+  albumIcon.classList.add("far");
+  albumIcon.style.color = "#ccc"; // Default color
+}
+
+// Event listener for heart icon click
+albumIcon.addEventListener("click", () => {
+  // Toggle between filled and hollow heart
+  if (albumIcon.classList.contains("far")) {
+    albumIcon.classList.remove("far");
+    albumIcon.classList.add("fas");
+    albumIcon.style.color = "#1DB954"; // Spotify Green
+    // Store the filled state in localStorage
+    localStorage.setItem("heartState", "filled");
+  } else {
+    albumIcon.classList.remove("fas");
+    albumIcon.classList.add("far");
+    albumIcon.style.color = "#ccc"; // Default color
+    // Store the hollow state in localStorage
+    localStorage.setItem("heartState", "hollow");
+  }
+});
+
 function updatePlayerUI(trackIndex) {
   const track = tracks[trackIndex];
 
@@ -216,7 +280,9 @@ function updatePlayerUI(trackIndex) {
 // After loading the track, apply all the saved states
 function loadTrack() {
   // Load and play the selected track
-  currentAudio.pause();
+  if (currentAudio) {
+    currentAudio.pause();
+  }
   currentAudio = new Audio(tracks[currentTrackIndex].audio);
   currentAudio.muted = isMuted;
   localStorage.setItem("currentTrackIndex", currentTrackIndex);
@@ -237,7 +303,9 @@ function loadTrack() {
 
   currentAudio.addEventListener("loadedmetadata", () => {
     totTime.textContent = formatTime(currentAudio.duration);
-    currentAudio.play();
+    if (isPlaying) {
+      currentAudio.play(); // Ensure it plays if it's in play state
+    }
     playButton.src = isPlaying
       ? "./assets/pause-button-icon.png"
       : "./assets/player_icon3.png";
