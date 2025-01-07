@@ -22,9 +22,46 @@
   </head>
 
   <body>
-    <div class="main">
+    <div class="sticky-nav">
+      <div class="sticky-nav-icons">
+        <img src="./assets/spotify-logo.png" class="logo" />
+        <!-- <img src="./assets/forward_icon.png" class="hide" /> -->
+      </div>
+
+      <div class="search-container hide">
+        <button id="home-button">
+          <i class="fas fa-home"></i>
+        </button>
+        <button id="search-button"><i class="fa-solid fa-magnifying-glass"></i></button>
+        <input
+          type="text"
+          id="search-input"
+          placeholder="Search for songs, artists, or playlists"
+        />
+      </div>
+
+      <div class="sticky-nav-options">
+        <button class="badge nav-item hide">Explore Premium</button>
+        <button class="badge nav-item dark-badge">
+          <i class="fa-regular fa-circle-down" style="margin-right: 5px"></i
+          >Install App
+        </button>
+        <div id="dropdown" class="dropdown">
+          <i class="fa-regular fa-user nav-item" id="profileIcon"></i>
+          <div class="dropdown-content" id="dropdownMenu" style="display:none;">
+            <!-- Menu items, visible when user clicks on profile icon -->
+            <a href="#" id="profileOption">Profile</a>
+            <a href="#" id="settingsOption">Settings</a>
+            <a href="#" id="loginOption">Login</a>
+            <a href="#" id="logoutOption" style="display:none;">Logout</a>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+    <div class="main-container">
       <div class="sidebar">
-        <div class="nav">
+        <!-- <div class="nav">
           <div class="nav-option" style="opacity: 1">
             <i class="fa-solid fa-house"></i>
             <a href="#">Home</a>
@@ -33,7 +70,7 @@
             <i class="fa-solid fa-magnifying-glass"></i>
             <a href="#">Search</a>
           </div>
-        </div>
+        </div> -->
         <div class="library">
           <div class="options">
             <div class="lib-option nav-option">
@@ -45,7 +82,7 @@
               <i class="fa-solid fa-arrow-right"></i>
             </div>
           </div>
-          <div class="lib-box">
+          <div  class="library-box1 islogout hide">
             <div class="box">
               <p class="box-p1">Create Your First Playlist</p>
               <p class="box-p2">It's easy, we'll help you</p>
@@ -57,24 +94,127 @@
               <button class="badge">Browse podcasts</button>
             </div>
           </div>
+          <div class="islogin">
+          <h6 class="badge-heading" >Artists</h6>
+          <div  class="library-box">
+            <ul class="artist-list">
+              <li class="library-item-pinned">
+                <img src="./assets/liked_songs.png" alt="Liked Song" />
+                <span>Liked Songs</span>
+              </li>
+              <li class="library-item">
+                <img src="./assets/artist2.jpg" alt="Artist 2" />
+                <span>Artist 2</span>
+              </li>
+            </ul>
+            <ul class="playlist-list">
+              <li class="library-item">
+                <img src="./assets/playlist1.jpg" alt="Playlist 1" />
+                <span>Playlist 1</span>
+              </li>
+              <li class="library-item">
+                <img src="./assets/playlist2.jpg" alt="Playlist 2" />
+                <span>Playlist 2</span>
+              </li>
+              <li class="library-item">
+                <img src="./assets/playlist2.jpg" alt="Playlist 2" />
+                <span>Playlist 2</span>
+              </li>
+              <li class="library-item">
+                <img src="./assets/playlist2.jpg" alt="Playlist 2" />
+                <span>Playlist 2</span>
+              </li>
+              <li class="library-item">
+                <img src="./assets/playlist2.jpg" alt="Playlist 2" />
+                <span>Playlist 2</span>
+              </li>
+              <li class="library-item">
+                <img src="./assets/playlist2.jpg" alt="Playlist 2" />
+                <span>Playlist 2</span>
+              </li>
+              <li class="library-item">
+                <img src="./assets/playlist2.jpg" alt="Playlist 2" />
+                <span>Playlist 2</span>
+              </li>
+              <li class="library-item">
+                <img src="./assets/playlist2.jpg" alt="Playlist 2" />
+                <span>Playlist 2</span>
+              </li>
+              <li class="library-item">
+                <img src="./assets/playlist2.jpg" alt="Playlist 2" />
+                <span>Playlist 2</span>
+              </li>
+              <li class="library-item">
+                <img src="./assets/playlist2.jpg" alt="Playlist 2" />
+                <span>Playlist 2</span>
+              </li>
+              <li class="library-item">
+                <img src="./assets/playlist2.jpg" alt="Playlist 2" />
+                <span>Playlist 2</span>
+              </li>
+              <li class="library-item">
+                <img src="./assets/playlist2.jpg" alt="Playlist 2" />
+                <span>Playlist 2</span>
+              </li>
+              <li class="library-item">
+                <img src="./assets/playlist2.jpg" alt="Playlist 2" />
+                <span>Playlist 2</span>
+              </li>
+              <li class="library-item">
+                <img src="./assets/playlist2.jpg" alt="Playlist 2" />
+                <span>Playlist 2</span>
+              </li>
+              <li class="library-item">
+                <img src="./assets/playlist2.jpg" alt="Playlist 2" />
+                <span>Playlist 2</span>
+              </li>
+              <li class="library-item">
+                <img src="./assets/playlist2.jpg" alt="Playlist 2" />
+                <span>Playlist 2</span>
+              </li>
+              <li class="library-item">
+                <img src="./assets/playlist2.jpg" alt="Playlist 2" />
+                <span>Playlist 2</span>
+              </li>
+              <li class="library-item">
+                <img src="./assets/playlist2.jpg" alt="Playlist 2" />
+                <span>Playlist 2</span>
+              </li>
+              <li class="library-item">
+                <img src="./assets/playlist2.jpg" alt="Playlist 2" />
+                <span>Playlist 2</span>
+              </li>
+              <li class="library-item">
+                <img src="./assets/playlist2.jpg" alt="Playlist 2" />
+                <span>Playlist 2</span>
+              </li>
+              <li class="library-item">
+                <img src="./assets/playlist2.jpg" alt="Playlist 2" />
+                <span>Playlist 2</span>
+              </li>
+              <li class="library-item">
+                <img src="./assets/playlist2.jpg" alt="Playlist 2" />
+                <span>Playlist 2</span>
+              </li>
+              <li class="library-item">
+                <img src="./assets/playlist2.jpg" alt="Playlist 2" />
+                <span>Playlist 2</span>
+              </li>
+              <li class="library-item">
+                <img src="./assets/playlist2.jpg" alt="Playlist 2" />
+                <span>Playlist 2</span>
+              </li>
+              <li class="library-item">
+                <img src="./assets/playlist2.jpg" alt="Playlist 2" />
+                <span>Playlist last</span>
+              </li>
+              <!-- More playlists -->
+            </ul>
+          </div></div>
         </div>
       </div>
       <div class="main-content">
-        <div class="sticky-nav">
-          <div class="sticky-nav-icons">
-            <img src="./assets/backward_icon.png" />
-            <img src="./assets/forward_icon.png" class="hide" />
-          </div>
-          <div class="sticky-nav-options">
-            <button class="badge nav-item hide">Explore Premium</button>
-            <button class="badge nav-item dark-badge">
-              <i class="fa-regular fa-circle-down" style="margin-right: 5px"></i
-              >Install App
-            </button>
-            <i class="fa-regular fa-user nav-item"></i>
-          </div>
-        </div>
-
+        <div class="islogin">
         <h2>Recently Played</h2>
         <div class="cards-container">
           <div class="card">
@@ -83,7 +223,7 @@
             <p class="card-info">Your daily updates of the most liked...</p>
           </div>
         </div>
-
+      </div>
         <h2>Trending now near you</h2>
         <div id="carousel-container">
           <button
@@ -93,7 +233,10 @@
           <div id="carousel" class="carousel">
             <!-- Cards will be dynamically added here -->
           </div>
-          <button id="next-btn" class="fa-solid fa-chevron-right nav-btn"></button>
+          <button
+            id="next-btn"
+            class="fa-solid fa-chevron-right nav-btn"
+          ></button>
         </div>
 
         <h2>Featured Image</h2>
@@ -118,97 +261,98 @@
           <div class="line"></div>
         </div>
       </div>
-      <div class="music-player">
-        <div class="album">
-          <img
-            id="album-picture"
-            src="./assets/album_picture.jpeg"
-            style="width: 56px; height: 56px"
-          />
-          <div class="album-info">
-            <p id="album-title" style="font-size: 14px; font-weight: 600">
-              Daylight
-            </p>
-            <p
-              id="album-artist"
-              style="font-size: 12px; opacity: 0.75; line-height: 0"
-            >
-              David Kushner
-            </p>
-          </div>
-          <i
-            id="album-icon1"
-            class="far fa-heart album-icon"
-            style="font-size: 1.25rem"
-          ></i>
+    </div>
+    <div class="music-player">
+      <div class="album">
+        <img
+          id="album-picture"
+          src="./assets/album_picture.jpeg"
+          style="width: 56px; height: 56px"
+        />
+        <div class="album-info">
+          <p id="album-title" style="font-size: 14px; font-weight: 600">
+            Daylight
+          </p>
+          <p
+            id="album-artist"
+            style="font-size: 12px; opacity: 0.75; line-height: 0"
+          >
+            David Kushner
+          </p>
         </div>
-        <div class="player">
-          <div class="player-controls">
-            <img
-              src="./assets/player_icon1.png"
-              id="shuffle-button"
-              class="player-control-icon"
-            />
-            <img
-              src="./assets/player_icon2.png"
-              id="prev-button"
-              class="player-control-icon"
-            />
-            <img
-              src="./assets/player_icon3.png"
-              class="player-control-icon"
-              style="opacity: 1; height: 2rem"
-            />
-            <img
-              src="./assets/player_icon4.png"
-              id="next-button"
-              class="player-control-icon"
-            />
-            <img
-              src="./assets/repeat_off_icon.png"
-              id="repeat-button"
-              class="player-control-icon"
-            />
-          </div>
-          <div class="playback-bar">
-            <span id="curr-time">0:00</span>
-            <input
-              type="range"
-              min="0"
-              max="100"
-              step="1"
-              class="progress-bar"
-              value="0"
-            />
-            <span id="tot-time">0:00</span>
-          </div>
+        <i
+          id="album-icon1"
+          class="far fa-heart album-icon"
+          style="font-size: 1.25rem"
+        ></i>
+      </div>
+      <div class="player">
+        <div class="player-controls">
+          <img
+            src="./assets/player_icon1.png"
+            id="shuffle-button"
+            class="player-control-icon"
+          />
+          <img
+            src="./assets/player_icon2.png"
+            id="prev-button"
+            class="player-control-icon"
+          />
+          <img
+            src="./assets/player_icon3.png"
+            class="player-control-icon"
+            style="opacity: 1; height: 2rem"
+          />
+          <img
+            src="./assets/player_icon4.png"
+            id="next-button"
+            class="player-control-icon"
+          />
+          <img
+            src="./assets/repeat_off_icon.png"
+            id="repeat-button"
+            class="player-control-icon"
+          />
         </div>
-        <div class="controls">
-          <img
-            src="./assets/controls_icon1.png"
-            class="control-icon"
-            style="height: 2rem"
+        <div class="playback-bar">
+          <span id="curr-time">0:00</span>
+          <input
+            type="range"
+            min="0"
+            max="100"
+            step="1"
+            class="progress-bar"
+            value="0"
           />
-          <img
-            src="./assets/controld_icon2.png"
-            class="control-icon"
-            style="height: 2rem"
-          />
-          <img src="./assets/controls_icon3.png" class="control-icon" />
-          <img src="./assets/controls_icon4.png" class="control-icon" />
-          <img
-            src="./assets/controls_icon_mute.png"
-            alt="Mute"
-            class="control-icon"
-            id="mute-button"
-          />
-          <input type="range" min="0" max="100" step="1" class="sound-bar" />
-          <img src="./assets/" alt="" />
-          <img src="./assets/controls_icon6.png" alt="" class="control-icon" />
-          <img src="./assets/controls_icon7.png" alt="" class="control-icon" />
+          <span id="tot-time">0:00</span>
         </div>
       </div>
+      <div class="controls">
+        <img
+          src="./assets/controls_icon1.png"
+          class="control-icon"
+          style="height: 2rem"
+        />
+        <img
+          src="./assets/controld_icon2.png"
+          class="control-icon"
+          style="height: 2rem"
+        />
+        <img src="./assets/controls_icon3.png" class="control-icon" />
+        <img src="./assets/controls_icon4.png" class="control-icon" />
+        <img
+          src="./assets/controls_icon_mute.png"
+          alt="Mute"
+          class="control-icon"
+          id="mute-button"
+        />
+        <input type="range" min="0" max="100" step="1" class="sound-bar" />
+        <img src="./assets/" alt="" />
+        <img src="./assets/controls_icon6.png" alt="" class="control-icon" />
+        <img src="./assets/controls_icon7.png" alt="" class="control-icon" />
+      </div>
     </div>
-    <script src="js/main.js"></script>
+    <script src="js/login.js"></script>
+    <script type="module" src="js/main.js"></script>
   </body>
 </html>

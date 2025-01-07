@@ -1,3 +1,4 @@
+import { tracks } from "./tracks.js";
 const playButton = document.querySelector(".player-control-icon:nth-child(3)");
 const progressBar = document.querySelector(".progress-bar");
 const soundBar = document.querySelector(".sound-bar");
@@ -19,51 +20,12 @@ const carousel = document.getElementById("carousel");
 const prevBtn = document.getElementById("prev-btn");
 const nextBtn = document.getElementById("next-btn");
 
-const tracks = [
-  {
-    title: "Top 50 - Global",
-    info: "Your daily updates of the most played...",
-    image: "./assets/card1img.jpeg",
-    audio: "./assets/sample.mp3",
-  },
-  {
-    title: "Top 50 - India",
-    info: "The most trending music in India.",
-    image: "./assets/card2img.jpeg",
-    audio: "./assets/sample1.mp3",
-  },
-  {
-    title: "Top 50 - USA",
-    info: "The top charts from USA.",
-    image: "./assets/card3img.jpeg",
-    audio: "./assets/sample2.mp3",
-  },
-  {
-    title: "Top 50 - UK",
-    info: "The UK’s hottest tracks of the week.",
-    image: "./assets/card4img.jpeg",
-    audio: "./assets/sample.mp3",
-  },
-  {
-    title: "Top 50 - Australia",
-    info: "Australia's trending music.",
-    image: "./assets/card5img.jpeg",
-    audio: "./assets/sample1.mp3",
-  },
-  {
-    title: "Top 50 - France",
-    info: "The top French songs right now.",
-    image: "./assets/card6img.jpeg",
-    audio: "./assets/sample2.mp3",
-  },
-];
-
 let activePlayPauseButton = null;
 
-const tracksPerScroll = 3; // Number of tracks to scroll per click
+const tracksPerScroll = 1; 
 
 function generateCards() {
-  carousel.innerHTML = ""; // Clear existing cards
+  carousel.innerHTML = ""; 
 
   tracks.forEach((track, index) => {
     const card = document.createElement("div");
@@ -461,3 +423,5 @@ function formatTime(seconds) {
     .padStart(2, "0");
   return `${mins}:${secs}`;
 }
+
+
