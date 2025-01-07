@@ -32,7 +32,9 @@
         <button id="home-button">
           <i class="fas fa-home"></i>
         </button>
-        <button id="search-button"><i class="fa-solid fa-magnifying-glass"></i></button>
+        <button id="search-button">
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
         <input
           type="text"
           id="search-input"
@@ -48,15 +50,22 @@
         </button>
         <div id="dropdown" class="dropdown">
           <i class="fa-regular fa-user nav-item" id="profileIcon"></i>
-          <div class="dropdown-content" id="dropdownMenu" style="display:none;">
+          <div class="dropdown-content" id="dropdownMenu" style="display: none">
             <!-- Menu items, visible when user clicks on profile icon -->
             <a href="#" id="profileOption">Profile</a>
             <a href="#" id="settingsOption">Settings</a>
             <a href="#" id="loginOption">Login</a>
-            <a href="#" id="logoutOption" style="display:none;">Logout</a>
+            <a href="#" id="logoutOption" style="display: none">Logout</a>
           </div>
         </div>
-        
+      </div>
+    </div>
+    <div id="login-modal" class="hidden">
+      <div class="modal-content">
+        <h2>Welcome to Spotify!</h2>
+        <p>Please log in to access all features.</p>
+        <button id="login-button">Log In</button>
+        <button id="close-modal">Close</button>
       </div>
     </div>
     <div class="main-container">
@@ -82,7 +91,7 @@
               <i class="fa-solid fa-arrow-right"></i>
             </div>
           </div>
-          <div  class="library-box1 islogout hide">
+          <div class="library-box1 islogout hide">
             <div class="box">
               <p class="box-p1">Create Your First Playlist</p>
               <p class="box-p2">It's easy, we'll help you</p>
@@ -95,135 +104,136 @@
             </div>
           </div>
           <div class="islogin">
-          <h6 class="badge-heading" >Artists</h6>
-          <div  class="library-box">
-            <ul class="artist-list">
-              <li class="library-item-pinned">
-                <img src="./assets/liked_songs.png" alt="Liked Song" />
-                <span>Liked Songs</span>
-              </li>
-              <li class="library-item">
-                <img src="./assets/artist2.jpg" alt="Artist 2" />
-                <span>Artist 2</span>
-              </li>
-            </ul>
-            <ul class="playlist-list">
-              <li class="library-item">
-                <img src="./assets/playlist1.jpg" alt="Playlist 1" />
-                <span>Playlist 1</span>
-              </li>
-              <li class="library-item">
-                <img src="./assets/playlist2.jpg" alt="Playlist 2" />
-                <span>Playlist 2</span>
-              </li>
-              <li class="library-item">
-                <img src="./assets/playlist2.jpg" alt="Playlist 2" />
-                <span>Playlist 2</span>
-              </li>
-              <li class="library-item">
-                <img src="./assets/playlist2.jpg" alt="Playlist 2" />
-                <span>Playlist 2</span>
-              </li>
-              <li class="library-item">
-                <img src="./assets/playlist2.jpg" alt="Playlist 2" />
-                <span>Playlist 2</span>
-              </li>
-              <li class="library-item">
-                <img src="./assets/playlist2.jpg" alt="Playlist 2" />
-                <span>Playlist 2</span>
-              </li>
-              <li class="library-item">
-                <img src="./assets/playlist2.jpg" alt="Playlist 2" />
-                <span>Playlist 2</span>
-              </li>
-              <li class="library-item">
-                <img src="./assets/playlist2.jpg" alt="Playlist 2" />
-                <span>Playlist 2</span>
-              </li>
-              <li class="library-item">
-                <img src="./assets/playlist2.jpg" alt="Playlist 2" />
-                <span>Playlist 2</span>
-              </li>
-              <li class="library-item">
-                <img src="./assets/playlist2.jpg" alt="Playlist 2" />
-                <span>Playlist 2</span>
-              </li>
-              <li class="library-item">
-                <img src="./assets/playlist2.jpg" alt="Playlist 2" />
-                <span>Playlist 2</span>
-              </li>
-              <li class="library-item">
-                <img src="./assets/playlist2.jpg" alt="Playlist 2" />
-                <span>Playlist 2</span>
-              </li>
-              <li class="library-item">
-                <img src="./assets/playlist2.jpg" alt="Playlist 2" />
-                <span>Playlist 2</span>
-              </li>
-              <li class="library-item">
-                <img src="./assets/playlist2.jpg" alt="Playlist 2" />
-                <span>Playlist 2</span>
-              </li>
-              <li class="library-item">
-                <img src="./assets/playlist2.jpg" alt="Playlist 2" />
-                <span>Playlist 2</span>
-              </li>
-              <li class="library-item">
-                <img src="./assets/playlist2.jpg" alt="Playlist 2" />
-                <span>Playlist 2</span>
-              </li>
-              <li class="library-item">
-                <img src="./assets/playlist2.jpg" alt="Playlist 2" />
-                <span>Playlist 2</span>
-              </li>
-              <li class="library-item">
-                <img src="./assets/playlist2.jpg" alt="Playlist 2" />
-                <span>Playlist 2</span>
-              </li>
-              <li class="library-item">
-                <img src="./assets/playlist2.jpg" alt="Playlist 2" />
-                <span>Playlist 2</span>
-              </li>
-              <li class="library-item">
-                <img src="./assets/playlist2.jpg" alt="Playlist 2" />
-                <span>Playlist 2</span>
-              </li>
-              <li class="library-item">
-                <img src="./assets/playlist2.jpg" alt="Playlist 2" />
-                <span>Playlist 2</span>
-              </li>
-              <li class="library-item">
-                <img src="./assets/playlist2.jpg" alt="Playlist 2" />
-                <span>Playlist 2</span>
-              </li>
-              <li class="library-item">
-                <img src="./assets/playlist2.jpg" alt="Playlist 2" />
-                <span>Playlist 2</span>
-              </li>
-              <li class="library-item">
-                <img src="./assets/playlist2.jpg" alt="Playlist 2" />
-                <span>Playlist 2</span>
-              </li>
-              <li class="library-item">
-                <img src="./assets/playlist2.jpg" alt="Playlist 2" />
-                <span>Playlist last</span>
-              </li>
-              <!-- More playlists -->
-            </ul>
-          </div></div>
+            <h6 class="badge-heading">Artists</h6>
+            <div class="library-box">
+              <ul class="artist-list">
+                <li class="library-item-pinned">
+                  <img src="./assets/liked_songs.png" alt="Liked Song" />
+                  <span>Liked Songs</span>
+                </li>
+                <li class="library-item">
+                  <img src="./assets/artist2.jpg" alt="Artist 2" />
+                  <span>Artist 2</span>
+                </li>
+              </ul>
+              <ul class="playlist-list">
+                <li class="library-item">
+                  <img src="./assets/playlist1.jpg" alt="Playlist 1" />
+                  <span>Playlist 1</span>
+                </li>
+                <li class="library-item">
+                  <img src="./assets/playlist2.jpg" alt="Playlist 2" />
+                  <span>Playlist 2</span>
+                </li>
+                <li class="library-item">
+                  <img src="./assets/playlist2.jpg" alt="Playlist 2" />
+                  <span>Playlist 2</span>
+                </li>
+                <li class="library-item">
+                  <img src="./assets/playlist2.jpg" alt="Playlist 2" />
+                  <span>Playlist 2</span>
+                </li>
+                <li class="library-item">
+                  <img src="./assets/playlist2.jpg" alt="Playlist 2" />
+                  <span>Playlist 2</span>
+                </li>
+                <li class="library-item">
+                  <img src="./assets/playlist2.jpg" alt="Playlist 2" />
+                  <span>Playlist 2</span>
+                </li>
+                <li class="library-item">
+                  <img src="./assets/playlist2.jpg" alt="Playlist 2" />
+                  <span>Playlist 2</span>
+                </li>
+                <li class="library-item">
+                  <img src="./assets/playlist2.jpg" alt="Playlist 2" />
+                  <span>Playlist 2</span>
+                </li>
+                <li class="library-item">
+                  <img src="./assets/playlist2.jpg" alt="Playlist 2" />
+                  <span>Playlist 2</span>
+                </li>
+                <li class="library-item">
+                  <img src="./assets/playlist2.jpg" alt="Playlist 2" />
+                  <span>Playlist 2</span>
+                </li>
+                <li class="library-item">
+                  <img src="./assets/playlist2.jpg" alt="Playlist 2" />
+                  <span>Playlist 2</span>
+                </li>
+                <li class="library-item">
+                  <img src="./assets/playlist2.jpg" alt="Playlist 2" />
+                  <span>Playlist 2</span>
+                </li>
+                <li class="library-item">
+                  <img src="./assets/playlist2.jpg" alt="Playlist 2" />
+                  <span>Playlist 2</span>
+                </li>
+                <li class="library-item">
+                  <img src="./assets/playlist2.jpg" alt="Playlist 2" />
+                  <span>Playlist 2</span>
+                </li>
+                <li class="library-item">
+                  <img src="./assets/playlist2.jpg" alt="Playlist 2" />
+                  <span>Playlist 2</span>
+                </li>
+                <li class="library-item">
+                  <img src="./assets/playlist2.jpg" alt="Playlist 2" />
+                  <span>Playlist 2</span>
+                </li>
+                <li class="library-item">
+                  <img src="./assets/playlist2.jpg" alt="Playlist 2" />
+                  <span>Playlist 2</span>
+                </li>
+                <li class="library-item">
+                  <img src="./assets/playlist2.jpg" alt="Playlist 2" />
+                  <span>Playlist 2</span>
+                </li>
+                <li class="library-item">
+                  <img src="./assets/playlist2.jpg" alt="Playlist 2" />
+                  <span>Playlist 2</span>
+                </li>
+                <li class="library-item">
+                  <img src="./assets/playlist2.jpg" alt="Playlist 2" />
+                  <span>Playlist 2</span>
+                </li>
+                <li class="library-item">
+                  <img src="./assets/playlist2.jpg" alt="Playlist 2" />
+                  <span>Playlist 2</span>
+                </li>
+                <li class="library-item">
+                  <img src="./assets/playlist2.jpg" alt="Playlist 2" />
+                  <span>Playlist 2</span>
+                </li>
+                <li class="library-item">
+                  <img src="./assets/playlist2.jpg" alt="Playlist 2" />
+                  <span>Playlist 2</span>
+                </li>
+                <li class="library-item">
+                  <img src="./assets/playlist2.jpg" alt="Playlist 2" />
+                  <span>Playlist 2</span>
+                </li>
+                <li class="library-item">
+                  <img src="./assets/playlist2.jpg" alt="Playlist 2" />
+                  <span>Playlist last</span>
+                </li>
+                <!-- More playlists -->
+              </ul>
+            </div>
+          </div>
         </div>
       </div>
       <div class="main-content">
         <div class="islogin">
-        <h2>Recently Played</h2>
-        <div class="cards-container">
-          <div class="card">
-            <img src="./assets/liked_songs.png" class="card-img" />
-            <p class="card-title">Liked Songs</p>
-            <p class="card-info">Your daily updates of the most liked...</p>
+          <h2>Recently Played</h2>
+          <div class="cards-container">
+            <div class="card">
+              <img src="./assets/liked_songs.png" class="card-img" />
+              <p class="card-title">Liked Songs</p>
+              <p class="card-info">Your daily updates of the most liked...</p>
+            </div>
           </div>
         </div>
-      </div>
         <h2>Trending now near you</h2>
         <div id="carousel-container">
           <button

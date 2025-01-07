@@ -11,7 +11,6 @@ const prevButton = document.getElementById("prev-button");
 const nextButton = document.getElementById("next-button");
 const shuffleButton = document.getElementById("shuffle-button");
 const repeatButton = document.getElementById("repeat-button");
-const cardsContainer = document.getElementById("cards-container");
 const albumPicture = document.getElementById("album-picture");
 const albumTitle = document.getElementById("album-title");
 const albumArtist = document.getElementById("album-artist");
@@ -22,10 +21,10 @@ const nextBtn = document.getElementById("next-btn");
 
 let activePlayPauseButton = null;
 
-const tracksPerScroll = 1; 
+const tracksPerScroll = 1;
 
 function generateCards() {
-  carousel.innerHTML = ""; 
+  carousel.innerHTML = "";
 
   tracks.forEach((track, index) => {
     const card = document.createElement("div");
@@ -133,6 +132,7 @@ currentAudio.volume = volume; // Set initial volume from localStorage
 // Load metadata for the first track and set mute state
 currentAudio.addEventListener("loadedmetadata", () => {
   totTime.textContent = formatTime(currentAudio.duration);
+
   if (isPlaying) {
     currentAudio.play(); // Ensure it plays if it's in play state
   }
@@ -145,7 +145,8 @@ currentAudio.addEventListener("loadedmetadata", () => {
 
   soundBar.value = volume * 100; // Set saved volume
   currentAudio.volume = volume;
-
+  const volumeProgress = soundBar.value; // Get the current value (0 to 100)
+  soundBar.style.background = `linear-gradient(to right, white ${volumeProgress}%, #333 ${volumeProgress}%)`;
   // Save the unmuted state in localStorage
   localStorage.setItem("isMuted", isMuted);
 });
@@ -167,14 +168,31 @@ playButton.addEventListener("click", () => {
 currentAudio.addEventListener("timeupdate", () => {
   const progress = (currentAudio.currentTime / currentAudio.duration) * 100;
   progressBar.value = progress;
+  progressBar.style.background = `linear-gradient(to right, white ${progress}%, #333 ${progress}%)`;
   currTime.textContent = formatTime(currentAudio.currentTime);
   localStorage.setItem("currentTime", currentAudio.currentTime);
 });
+
+// progressBar.addEventListener("mouseenter", () => {
+//   const progress = (currentAudio.currentTime / currentAudio.duration) * 100;
+//   const thumbPosition = progressBar.value;
+//   progressBar.style.transition = "background 0.3s ease"; // Smooth transition
+//   progressBar.style.background = `linear-gradient(to right, #1bd760 ${thumbPosition}%, #333 ${thumbPosition}%, #1bd760 ${progress}%, #333 ${progress}%)`;
+// });
+
+// progressBar.addEventListener("mouseleave", () => {
+//   const progress = (currentAudio.currentTime / currentAudio.duration) * 100;
+//   const thumbPosition = progressBar.value;
+//   progressBar.style.transition = "background 0.3s ease"; // Smooth transition
+//   progressBar.style.background = `linear-gradient(to right, white ${thumbPosition}%, #333 ${thumbPosition}%, #333 ${progress}%)`;
+// });
 
 // Seek functionality
 progressBar.addEventListener("input", () => {
   const seekTime = (progressBar.value / 100) * currentAudio.duration;
   currentAudio.currentTime = seekTime;
+  const progress = progressBar.value; // Get the current value (0 to 100)
+  progressBar.style.background = `linear-gradient(to right, #1bd760 ${progress}%, #333 ${progress}%)`;
   localStorage.setItem("currentTime", currentAudio.currentTime);
 });
 
@@ -184,6 +202,8 @@ soundBar.addEventListener("input", () => {
     currentAudio.volume = soundBar.value / 100;
     localStorage.setItem("volume", currentAudio.volume);
   }
+  const volumeProgress = soundBar.value; // Get the current value (0 to 100)
+  soundBar.style.background = `linear-gradient(to right, #1bd760 ${volumeProgress}%, #333 ${volumeProgress}%)`;
 });
 
 // Mute/Unmute functionality
@@ -204,7 +224,7 @@ function updateMuteButtonIcon() {
 if (localStorage.getItem("heartState") === "filled") {
   albumIcon.classList.remove("far");
   albumIcon.classList.add("fas");
-  albumIcon.style.color = "#1DB954"; // Spotify Green
+  albumIcon.style.color = "#1bd760"; // Spotify Green
 } else {
   albumIcon.classList.remove("fas");
   albumIcon.classList.add("far");
@@ -217,7 +237,7 @@ albumIcon.addEventListener("click", () => {
   if (albumIcon.classList.contains("far")) {
     albumIcon.classList.remove("far");
     albumIcon.classList.add("fas");
-    albumIcon.style.color = "#1DB954"; // Spotify Green
+    albumIcon.style.color = "#1bd760"; // Spotify Green
     // Store the filled state in localStorage
     localStorage.setItem("heartState", "filled");
   } else {
@@ -262,7 +282,8 @@ function loadTrack() {
   // Update volume from localStorage
   currentAudio.volume = volume;
   soundBar.value = volume * 100;
-
+  const volumeProgress = soundBar.value; // Get the current value (0 to 100)
+  soundBar.style.background = `linear-gradient(to right, white ${volumeProgress}%, #333 ${volumeProgress}%)`;
   currentAudio.addEventListener("loadedmetadata", () => {
     totTime.textContent = formatTime(currentAudio.duration);
     if (isPlaying) {
@@ -277,6 +298,7 @@ function loadTrack() {
   currentAudio.addEventListener("timeupdate", () => {
     const progress = (currentAudio.currentTime / currentAudio.duration) * 100;
     progressBar.value = progress;
+    progressBar.style.background = `linear-gradient(to right, white ${progress}%, #333 ${progress}%)`;
     currTime.textContent = formatTime(currentAudio.currentTime);
   });
 
@@ -423,5 +445,3 @@ function formatTime(seconds) {
     .padStart(2, "0");
   return `${mins}:${secs}`;
 }
-
-
