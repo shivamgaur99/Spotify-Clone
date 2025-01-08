@@ -123,7 +123,7 @@ let isPlaying = false;
 let isShuffle = localStorage.getItem("isShuffle") === "true"; // Load shuffle state
 let repeatMode = parseInt(localStorage.getItem("repeatMode")) || 0; // Load repeat mode state
 let currentTime = parseFloat(localStorage.getItem("currentTime")) || 0;
-let volume = parseFloat(localStorage.getItem("volume")) || 1; // Load saved volume
+let volume = parseFloat(localStorage.getItem("volume")) || 1.0; // Load saved volume
 // Create a new audio element
 let currentAudio = new Audio(tracks[currentTrackIndex].audio);
 currentAudio.currentTime = currentTime;
@@ -151,18 +151,38 @@ currentAudio.addEventListener("loadedmetadata", () => {
   localStorage.setItem("isMuted", isMuted);
 });
 
+function updateCardPlayPauseButtons() {
+  // Get all card play/pause buttons
+  const cardPlayPauseButtons = document.querySelectorAll('.card .play-icon');
+  
+  // Loop through each card's play/pause button and update its state
+  cardPlayPauseButtons.forEach((button, index) => {
+    if (isPlaying && currentTrackIndex === index) {
+      button.innerHTML = '<i class="fas fa-pause"></i>'; // Show pause icon
+    } else {
+      button.innerHTML = '<i class="fas fa-play"></i>'; // Show play icon
+    }
+  });
+}
+
+
 // Play/Pause toggle
-playButton.addEventListener("click", () => {
+playButton.addEventListener('click', () => {
   if (isPlaying) {
     currentAudio.pause();
-    playButton.src = "./assets/player_icon3.png";
+    playButton.src = "./assets/player_icon3.png"; // Show play icon on mini player
   } else {
     currentAudio.play();
-    playButton.src = "./assets/pause-button-icon.png";
+    playButton.src = "./assets/pause-button-icon.png"; // Show pause icon on mini player
   }
+  
   isPlaying = !isPlaying;
   localStorage.setItem("isPlaying", isPlaying);
+
+  // Update all card play/pause buttons
+  updateCardPlayPauseButtons();
 });
+
 
 // Update progress bar
 currentAudio.addEventListener("timeupdate", () => {
@@ -173,27 +193,24 @@ currentAudio.addEventListener("timeupdate", () => {
   localStorage.setItem("currentTime", currentAudio.currentTime);
 });
 
-// progressBar.addEventListener("mouseenter", () => {
-//   const progress = (currentAudio.currentTime / currentAudio.duration) * 100;
-//   const thumbPosition = progressBar.value;
-//   progressBar.style.transition = "background 0.3s ease"; // Smooth transition
-//   progressBar.style.background = `linear-gradient(to right, #1bd760 ${thumbPosition}%, #333 ${thumbPosition}%, #1bd760 ${progress}%, #333 ${progress}%)`;
-// });
-
-// progressBar.addEventListener("mouseleave", () => {
-//   const progress = (currentAudio.currentTime / currentAudio.duration) * 100;
-//   const thumbPosition = progressBar.value;
-//   progressBar.style.transition = "background 0.3s ease"; // Smooth transition
-//   progressBar.style.background = `linear-gradient(to right, white ${thumbPosition}%, #333 ${thumbPosition}%, #333 ${progress}%)`;
-// });
-
 // Seek functionality
 progressBar.addEventListener("input", () => {
   const seekTime = (progressBar.value / 100) * currentAudio.duration;
   currentAudio.currentTime = seekTime;
-  const progress = progressBar.value; // Get the current value (0 to 100)
-  progressBar.style.background = `linear-gradient(to right, #1bd760 ${progress}%, #333 ${progress}%)`;
   localStorage.setItem("currentTime", currentAudio.currentTime);
+});
+
+// Hover effect for progress bar
+progressBar.addEventListener("mouseenter", () => {
+  const progress = progressBar.value; // Current progress (0 to 100)
+  progressBar.style.transition = "background 0.3s ease"; // Smooth transition
+  progressBar.style.background = `linear-gradient(to right, #1bd760 ${progress}%, #555 ${progress}%)`; // Hover effect color
+});
+
+progressBar.addEventListener("mouseleave", () => {
+  const progress = progressBar.value; // Current progress (0 to 100)
+  progressBar.style.transition = "background 0.3s ease"; // Smooth transition
+  progressBar.style.background = `linear-gradient(to right, white ${progress}%, #333 ${progress}%)`; // Default color
 });
 
 // Volume control
@@ -204,6 +221,18 @@ soundBar.addEventListener("input", () => {
   }
   const volumeProgress = soundBar.value; // Get the current value (0 to 100)
   soundBar.style.background = `linear-gradient(to right, #1bd760 ${volumeProgress}%, #333 ${volumeProgress}%)`;
+});
+
+soundBar.addEventListener("mouseenter", () => {
+  const volumeProgress = soundBar.value; // Current volume (0 to 100)
+  soundBar.style.transition = "background 0.3s ease"; // Smooth transition
+  soundBar.style.background = `linear-gradient(to right, #1bd760 ${volumeProgress}%, #555 ${volumeProgress}%)`;
+});
+
+soundBar.addEventListener("mouseleave", () => {
+  const volumeProgress = soundBar.value; // Current volume (0 to 100)
+  soundBar.style.transition = "background 0.3s ease"; // Smooth transition
+  soundBar.style.background = `linear-gradient(to right, white ${volumeProgress}%, #333 ${volumeProgress}%)`;
 });
 
 // Mute/Unmute functionality
@@ -261,11 +290,14 @@ function updatePlayerUI(trackIndex) {
 // Load and play current track
 // After loading the track, apply all the saved states
 function loadTrack() {
+  updateCardPlayPauseButtons()
   // Load and play the selected track
   if (currentAudio) {
     currentAudio.pause();
   }
   currentAudio = new Audio(tracks[currentTrackIndex].audio);
+  const savedTime = parseFloat(localStorage.getItem("currentTime")) || 0;
+  currentAudio.currentTime = savedTime;
   currentAudio.muted = isMuted;
   localStorage.setItem("currentTrackIndex", currentTrackIndex);
 
@@ -280,9 +312,10 @@ function loadTrack() {
   }
 
   // Update volume from localStorage
-  currentAudio.volume = volume;
-  soundBar.value = volume * 100;
-  const volumeProgress = soundBar.value; // Get the current value (0 to 100)
+  let volume = parseFloat(localStorage.getItem("volume")) || 1.0;
+  soundBar.value = volume * 100; // Set sound bar position
+  currentAudio.volume = volume; // Set the audio element's volume
+  const volumeProgress = soundBar.value;
   soundBar.style.background = `linear-gradient(to right, white ${volumeProgress}%, #333 ${volumeProgress}%)`;
   currentAudio.addEventListener("loadedmetadata", () => {
     totTime.textContent = formatTime(currentAudio.duration);
@@ -303,6 +336,8 @@ function loadTrack() {
   });
 
   currentAudio.addEventListener("ended", () => {
+    localStorage.setItem("currentTime", 0); // Reset saved time
+
     if (repeatMode === 1) {
       currentAudio.currentTime = 0; // Repeat the current track
       currentAudio.play();
@@ -378,6 +413,7 @@ function updateRepeatButtonIcon() {
 nextButton.addEventListener("click", nextTrack);
 
 function nextTrack() {
+  localStorage.setItem("currentTime", 0);
   if (isShuffle) {
     if (playedTracks.length === shuffledTracks.length) {
       // All tracks have been played, shuffle again
@@ -402,6 +438,7 @@ function nextTrack() {
 
 // Previous track (modified for shuffle)
 prevButton.addEventListener("click", () => {
+  localStorage.setItem("currentTime", 0);
   if (isShuffle) {
     if (playedTracks.length === shuffledTracks.length) {
       // All tracks have been played, shuffle again
