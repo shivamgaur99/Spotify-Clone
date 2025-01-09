@@ -19,6 +19,7 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/color-change.css" />
   </head>
 
   <body>
@@ -222,9 +223,12 @@
             </div>
           </div>
         </div>
+        <div class="resize-handle"></div>
       </div>
+      
       <div class="main-content">
-        <div class="islogin">
+
+        <!-- <div class="islogin">
           <h2>Recently Played</h2>
           <div class="cards-container">
             <div class="card">
@@ -233,7 +237,8 @@
               <p class="card-info">Your daily updates of the most liked...</p>
             </div>
           </div>
-        </div>
+        </div> -->
+
         <h2>Trending now near you</h2>
         <div id="carousel-container">
           <button
@@ -271,6 +276,32 @@
           <div class="line"></div>
         </div>
       </div>
+
+      <div id="playingView" class="now-playing-view">
+        <!-- Close Icon (X) -->
+        <button id="close-playing-view" class="close-btn">
+          <i class="fa fa-times"></i>
+          <!-- Font Awesome close icon -->
+        </button>
+      
+        <!-- Video Container -->
+        <div class="video-container">
+          <video id="track-video" autoplay loop muted class="song-video">
+            <source id="video-source" src="" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+        </div>
+      
+        <!-- Song Information Section -->
+        <div class="song-details">
+          <h3 id="song-title" class="song-title">Song Title</h3>
+          <p id="song-info" class="song-info">Song info</p>
+        </div>
+      
+        <div class="playing-view-resize-handle"></div>
+      </div>
+      
+      
     </div>
     <div class="music-player">
       <div class="album">
@@ -325,7 +356,7 @@
           />
         </div>
         <div class="playback-bar">
-          <span id="curr-time">0:00</span>
+          <span id="curr-time">-:--</span>
           <input
             type="range"
             min="0"
@@ -334,22 +365,24 @@
             class="progress-bar"
             value="0"
           />
-          <span id="tot-time">0:00</span>
+          <span id="tot-time">-:--</span>
         </div>
       </div>
       <div class="controls">
         <img
           src="./assets/controls_icon1.png"
+          id="controlIcon"
           class="control-icon"
-          style="height: 2rem"
+          style="height: 2rem; cursor: pointer"
+          alt="Control Icon"
         />
         <img
           src="./assets/controld_icon2.png"
-          class="control-icon"
+          class="control-icon hide"
           style="height: 2rem"
         />
-        <img src="./assets/controls_icon3.png" class="control-icon" />
-        <img src="./assets/controls_icon4.png" class="control-icon" />
+        <img src="./assets/controls_icon3.png" class="control-icon hide" />
+        <img src="./assets/controls_icon4.png" class="control-icon hide" />
         <img
           src="./assets/controls_icon_mute.png"
           alt="Mute"
@@ -358,11 +391,22 @@
         />
         <input type="range" min="0" max="100" step="1" class="sound-bar" />
         <img src="./assets/" alt="" />
-        <img src="./assets/controls_icon6.png" alt="" class="control-icon" />
-        <img src="./assets/controls_icon7.png" alt="" class="control-icon" />
+        <img
+          src="./assets/controls_icon6.png"
+          alt=""
+          class="control-icon hide"
+        />
+        <img
+          src="./assets/controls_icon7.png"
+          alt=""
+          class="control-icon hide"
+        />
       </div>
     </div>
     <script src="js/login.js"></script>
     <script type="module" src="js/main.js"></script>
+    <script type="module" src="js/sidebar-resize.js"></script>
+    <script type="module" src="js/playing-view-resize.js"></script>
+    <script type="module" src="js/playing-view.js"></script>
   </body>
 </html>

@@ -18,6 +18,10 @@ const albumIcon = document.getElementById("album-icon1");
 const carousel = document.getElementById("carousel");
 const prevBtn = document.getElementById("prev-btn");
 const nextBtn = document.getElementById("next-btn");
+const trackVideo = document.getElementById("track-video");
+const videoSource = document.getElementById("video-source");
+const songTitle = document.getElementById("song-title");
+const songInfo = document.getElementById("song-info");
 
 let activePlayPauseButton = null;
 
@@ -53,6 +57,7 @@ function generateCards() {
     playPauseButton.addEventListener("click", () => {
       if (isPlaying && currentTrackIndex === index) {
         currentAudio.pause();
+        trackVideo.pause();
         playPauseButton.innerHTML = '<i class="fas fa-play"></i>'; // Show play icon
         playButton.src = "./assets/player_icon3.png";
         isPlaying = false;
@@ -123,18 +128,21 @@ let isPlaying = false;
 let isShuffle = localStorage.getItem("isShuffle") === "true"; // Load shuffle state
 let repeatMode = parseInt(localStorage.getItem("repeatMode")) || 0; // Load repeat mode state
 let currentTime = parseFloat(localStorage.getItem("currentTime")) || 0;
+let videoCurrentTime =
+  parseFloat(localStorage.getItem("videoCurrentTime")) || 0;
 let volume = parseFloat(localStorage.getItem("volume")) || 1.0; // Load saved volume
 // Create a new audio element
 let currentAudio = new Audio(tracks[currentTrackIndex].audio);
 currentAudio.currentTime = currentTime;
 currentAudio.volume = volume; // Set initial volume from localStorage
-
+trackVideo.currentTime = videoCurrentTime;
 // Load metadata for the first track and set mute state
 currentAudio.addEventListener("loadedmetadata", () => {
   totTime.textContent = formatTime(currentAudio.duration);
 
   if (isPlaying) {
     currentAudio.play(); // Ensure it plays if it's in play state
+    trackVideo.play();
   }
   // Always reset to unmuted state after page refresh
   isMuted = false;
@@ -153,8 +161,8 @@ currentAudio.addEventListener("loadedmetadata", () => {
 
 function updateCardPlayPauseButtons() {
   // Get all card play/pause buttons
-  const cardPlayPauseButtons = document.querySelectorAll('.card .play-icon');
-  
+  const cardPlayPauseButtons = document.querySelectorAll(".card .play-icon");
+
   // Loop through each card's play/pause button and update its state
   cardPlayPauseButtons.forEach((button, index) => {
     if (isPlaying && currentTrackIndex === index) {
@@ -165,17 +173,27 @@ function updateCardPlayPauseButtons() {
   });
 }
 
+trackVideo.addEventListener("play", () => {
+  isPlaying = true;
+  localStorage.setItem("isPlaying", isPlaying);
+});
 
-// Play/Pause toggle
-playButton.addEventListener('click', () => {
+trackVideo.addEventListener("pause", () => {
+  isPlaying = false;
+  localStorage.setItem("isPlaying", isPlaying);
+});
+
+playButton.addEventListener("click", () => {
   if (isPlaying) {
     currentAudio.pause();
+    trackVideo.pause(); // Ensure the video is also paused
     playButton.src = "./assets/player_icon3.png"; // Show play icon on mini player
   } else {
     currentAudio.play();
+    trackVideo.play(); // Play video if it exists
     playButton.src = "./assets/pause-button-icon.png"; // Show pause icon on mini player
   }
-  
+
   isPlaying = !isPlaying;
   localStorage.setItem("isPlaying", isPlaying);
 
@@ -183,6 +201,10 @@ playButton.addEventListener('click', () => {
   updateCardPlayPauseButtons();
 });
 
+trackVideo.addEventListener("timeupdate", () => {
+  videoCurrentTime = trackVideo.currentTime;
+  localStorage.setItem("videoCurrentTime", videoCurrentTime);
+});
 
 // Update progress bar
 currentAudio.addEventListener("timeupdate", () => {
@@ -290,10 +312,17 @@ function updatePlayerUI(trackIndex) {
 // Load and play current track
 // After loading the track, apply all the saved states
 function loadTrack() {
-  updateCardPlayPauseButtons()
   // Load and play the selected track
+  if (
+    currentTrackIndex !== parseInt(localStorage.getItem("currentTrackIndex"))
+  ) {
+    localStorage.setItem("currentTime", 0);
+    videoSource.src = tracks[currentTrackIndex].video || "";
+    trackVideo.load();
+  }
   if (currentAudio) {
     currentAudio.pause();
+    trackVideo.pause();
   }
   currentAudio = new Audio(tracks[currentTrackIndex].audio);
   const savedTime = parseFloat(localStorage.getItem("currentTime")) || 0;
@@ -303,13 +332,43 @@ function loadTrack() {
 
   updatePlayerUI(currentTrackIndex);
 
+  // function normalizeURL(url) {
+  //   const a = document.createElement('a');
+  //   a.href = url;
+  //   return a.href;
+  // }
+
+  // if (videoSource.src !== normalizeURL(tracks[currentTrackIndex].video)) {
+  //   videoSource.src = tracks[currentTrackIndex].video || "";
+  //   trackVideo.load();
+  // }
+
+  const getFileName = (url) => {
+    return url.split("/").pop();
+  };
+
+  if (
+    getFileName(videoSource.src) !==
+    getFileName(tracks[currentTrackIndex].video)
+  ) {
+    videoSource.src = tracks[currentTrackIndex].video || "";
+    trackVideo.load();
+  }
+
+  songTitle.textContent = tracks[currentTrackIndex].title;
+  songInfo.textContent = tracks[currentTrackIndex].info;
+
   // Update the play button based on the saved isPlaying state
   if (isPlaying) {
     playButton.src = "./assets/pause-button-icon.png";
     currentAudio.play();
+    trackVideo.play();
   } else {
+    trackVideo.pause();
     playButton.src = "./assets/player_icon3.png";
   }
+
+  trackVideo.loop = true;
 
   // Update volume from localStorage
   let volume = parseFloat(localStorage.getItem("volume")) || 1.0;
@@ -321,6 +380,7 @@ function loadTrack() {
     totTime.textContent = formatTime(currentAudio.duration);
     if (isPlaying) {
       currentAudio.play(); // Ensure it plays if it's in play state
+      trackVideo.play();
     }
     playButton.src = isPlaying
       ? "./assets/pause-button-icon.png"
@@ -333,20 +393,35 @@ function loadTrack() {
     progressBar.value = progress;
     progressBar.style.background = `linear-gradient(to right, white ${progress}%, #333 ${progress}%)`;
     currTime.textContent = formatTime(currentAudio.currentTime);
+    localStorage.setItem("currentTime", currentAudio.currentTime);
+  });
+
+  trackVideo.addEventListener("timeupdate", () => {
+    videoCurrentTime = trackVideo.currentTime;
+    localStorage.setItem("videoCurrentTime", videoCurrentTime);
   });
 
   currentAudio.addEventListener("ended", () => {
     localStorage.setItem("currentTime", 0); // Reset saved time
-
     if (repeatMode === 1) {
       currentAudio.currentTime = 0; // Repeat the current track
       currentAudio.play();
+      trackVideo.play();
     } else if (repeatMode === 2) {
       nextTrack(); // Repeat playlist mode
     } else if (isShuffle) {
       nextTrack(); // Shuffle mode
     } else if (currentTrackIndex < tracks.length - 1) {
       nextTrack(); // Regular progression to the next track
+    }
+  });
+
+  trackVideo.addEventListener("ended", () => {
+    if (repeatMode === 1) {
+      trackVideo.currentTime = 0;
+      trackVideo.play(); // Loop the video
+    } else {
+      nextTrack(); // Move to the next track
     }
   });
 
@@ -358,6 +433,7 @@ function loadTrack() {
 
   // Update repeat button
   updateRepeatButtonIcon();
+  updateCardPlayPauseButtons();
 }
 
 // Ensure all settings (volume, track, mute, etc.) are initialized correctly on page load
@@ -462,20 +538,21 @@ prevButton.addEventListener("click", () => {
 });
 
 // Forward Button: Skip 10 seconds
-forwardButton.addEventListener("click", () => {
-  currentAudio.currentTime = Math.min(
-    currentAudio.currentTime + 10,
-    currentAudio.duration
-  );
-});
+// forwardButton.addEventListener("click", () => {
+//   currentAudio.currentTime = Math.min(
+//     currentAudio.currentTime + 10,
+//     currentAudio.duration
+//   );
+// });
 
 // Backward Button: Skip 10 seconds
-backwardButton.addEventListener("click", () => {
-  currentAudio.currentTime = Math.max(currentAudio.currentTime - 10, 0);
-});
+// backwardButton.addEventListener("click", () => {
+//   currentAudio.currentTime = Math.max(currentAudio.currentTime - 10, 0);
+// });
 
 // Format time utility
 function formatTime(seconds) {
+  if (isNaN(seconds) || seconds < 0) return "0:00";
   const mins = Math.floor(seconds / 60);
   const secs = Math.floor(seconds % 60)
     .toString()

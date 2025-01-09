@@ -6,6 +6,7 @@
   --primary: #fff;
   --lighterblack: #131313;
   --lightergrey: #a7a7a7;
+  --darkgrey: #5e5e5e;
 }
 
 body {
@@ -44,10 +45,7 @@ body {
 .search-container {
   display: flex;
   align-items: center;
-  padding: 10px;
   border-radius: 20px;
-  width: 100%;
-  max-width: 400px;
   margin-top: 10px;
   margin-left: 220px;
 }
@@ -56,7 +54,7 @@ body {
   flex: 1;
   padding: 15px;
   border: none;
-
+  width: 250px;
   border-radius: 0 20px 20px 0;
   outline: none;
   background-color: #1f1f1f;
@@ -82,8 +80,11 @@ body {
 }
 
 .sidebar {
+  position: relative;
   background-color: #000000;
-  width: 350px;
+  width: 320px;
+  min-width: 70px;
+  max-width: 800px;
   border-radius: 1rem;
   margin-right: 0.5rem;
 }
@@ -92,9 +93,14 @@ body {
   background-color: #121212;
   flex: 1;
   border-radius: 0.5rem;
-  overflow-y: auto;
+  overflow-y: hidden;
   height: 80vh;
-  padding: 0 1.5rem 0 1.5rem;
+  padding: 0 1.5rem;
+  overflow-x: hidden;
+}
+
+.main-content:hover{
+  overflow-y: auto;
 }
 
 .main-content h2 {
@@ -422,7 +428,7 @@ a {
   opacity: 0;
 }
 .progress-bar.green-active {
-  background: #1DB954 !important;
+  background: #1db954 !important;
 }
 
 .progress-bar:hover::-webkit-slider-runnable-track {
@@ -477,6 +483,7 @@ a {
   width: 25%;
   appearance: none;
   background-color: #333;
+  border-radius: 1rem;
   cursor: pointer;
 }
 
@@ -499,52 +506,6 @@ a {
 .sound-bar:hover::-webkit-slider-thumb {
   opacity: 1;
 }
-
-/* 
-.progress-bar {
-  width: 65%;
-  border-radius: 1rem;
-  height: 0.25rem;
-  margin-top: 0.5rem;
-  appearance: none;
-  background-color: transparent;
-  cursor: pointer;
-}
-
-.progress-bar:hover::-webkit-slider-runnable-track {
-  background-color: #1bd760;
-}
-
-.progress-bar::-webkit-slider-thumb {
-  appearance: none;
-  height: 14px;
-  width: 14px;
-  background-color: white;
-  border-radius: 50%;
-  margin-top: -5px;
-}
-
-.sound-bar {
-  width: 25%;
-  appearance: none;
-  background-color: transparent;
-  cursor: pointer;
-}
-
-.sound-bar::-webkit-slider-runnable-track {
-  background-color: #1bd760;
-  border-radius: 1rem;
-  height: 0.25rem;
-}
-
-.sound-bar::-webkit-slider-thumb {
-  appearance: none;
-  height: 14px;
-  width: 14px;
-  background-color: white;
-  border-radius: 50%;
-  margin-top: -5px;
-} */
 
 #carousel-container {
   display: flex;
@@ -613,9 +574,13 @@ a {
 
 .library-box {
   overflow-x: hidden;
-  overflow-y: auto;
+  overflow-y: hidden;
   height: 67vh;
   padding: 0 0.5rem;
+}
+
+.library-box:hover{
+  overflow-y: auto;
 }
 
 /* List style for artists and playlists */
@@ -731,7 +696,6 @@ a {
   .badge-heading {
     display: none;
   }
-
 }
 
 @media (max-width: 650px) {
@@ -741,14 +705,6 @@ a {
   }
 }
 
-::-webkit-scrollbar {
-  width: 12px;
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--lightergrey);
-}
-
 #profileIcon {
   font-size: 1.2rem;
   cursor: pointer;
@@ -756,67 +712,59 @@ a {
   margin-right: 30px;
 }
 
-/* Style for dropdown menu */
 .dropdown {
   position: relative;
   display: inline-block;
 }
 
-/* Dropdown content */
 .dropdown-content {
   display: none;
   position: absolute;
-  background-color: #333; /* Dark background */
+  background-color: #333;
   min-width: 160px;
   z-index: 1;
-  top: 100%; /* Position the dropdown below the button */
-  right: 0; /* Align the dropdown to the right */
+  top: 100%;
+  right: 0;
   margin-top: 1.2rem;
   margin-right: 5px;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Add shadow for better visibility */
-  border-radius: 4px; /* Rounded corners */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  border-radius: 4px;
   opacity: 0;
   visibility: hidden;
-  transform: translateY(10px); /* Initial state for smooth transition */
+  transform: translateY(10px);
   transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
 }
 
-/* Show the dropdown content when user clicks on the profile icon */
 .dropdown-content {
   display: block;
   opacity: 1;
   visibility: visible;
-  transform: translateY(0); /* Animate dropdown coming down */
+  transform: translateY(0);
 }
 
-/* Dropdown item styles */
 .dropdown-content a {
-  color: white; /* White text */
+  color: white;
   padding: 12px 16px;
   text-decoration: none;
   display: block;
   font-size: 14px;
-  text-align: left; /* Align text left */
-  border-bottom: 1px solid #444; /* Add divider between items */
+  text-align: left;
+  border-bottom: 1px solid #444;
 }
 
-/* Last item without border */
 .dropdown-content a:last-child {
   border-bottom: none;
 }
 
-/* Hover effect for dropdown items */
 .dropdown-content a:hover {
-  background-color: #1bd760; /* Green background on hover */
+  background-color: #1bd760;
   color: black;
 }
 
-
-/* Optional: Adjust the dropdown for a better fit */
 @media (max-width: 480px) {
   .dropdown-content {
     min-width: 140px;
-    font-size: 12px; 
+    font-size: 12px;
   }
 }
 
@@ -827,8 +775,6 @@ a {
 .show {
   display: block;
 }
-
-
 
 .hidden {
   display: none;
@@ -855,7 +801,8 @@ a {
   text-align: center;
 }
 
-#login-button, #close-modal {
+#login-button,
+#close-modal {
   padding: 10px 20px;
   border: none;
   border-radius: 5px;
@@ -875,4 +822,147 @@ a {
 #close-modal {
   background-color: #555;
   color: #fff;
+}
+
+.resize-handle {
+  position: absolute;
+  right: -5px;
+  top: 0;
+  width: 2px;
+  height: 100%;
+  cursor: ew-resize;
+  /* background-color: #ccc; */
+}
+
+.resize-handle:hover {
+  background-color: #999999;
+}
+
+.resize-handle:active {
+  background-color: rgba(255, 255, 255, 0.9); /* Slightly darker on click */
+}
+
+.playing-view-resize-handle {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 2px;
+  height: 100%;
+  cursor: ew-resize;
+  transition: background-color 0.3s ease;
+}
+
+.playing-view-resize-handle:hover {
+  background-color: rgba(255, 255, 255, 0.6);
+}
+
+.playing-view-resize-handle:active {
+  background-color: rgba(255, 255, 255, 0.8);
+}
+
+.now-playing-view {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 360px;
+  max-width: 400px;
+  min-width: 250px;
+  align-items: center;
+  justify-content: center;
+  background-color: #121212;
+  margin-left: 0.5rem;
+  color: white;
+  border-radius: 10px;
+  overflow: hidden;
+  height: 80vh;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Close Icon (X) at the top right */
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  opacity: 0;
+  z-index: 10;
+  transform: scale(0.7);
+}
+
+.close-btn:hover {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Video Container */
+.video-container {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: opacity 0.3s ease;
+}
+
+.song-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  opacity: 0.7;
+  transition: opacity 0.3s ease;
+}
+
+.now-playing-view:hover .song-video {
+  opacity: 1;
+}
+
+/* Song Details Section (Initially at bottom) */
+.song-details {
+  position: absolute;
+  bottom: 20px;
+  margin-left: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-self: start;
+  align-self: start;
+  z-index: 1;
+  transition: bottom 0.3s ease, transform 0.3s ease;
+}
+
+.song-title {
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin-bottom: 0.2rem;
+  line-height: 0.1;
+}
+
+.song-info {
+  color: #a7a7a7;
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
+.now-playing-view:hover .close-btn {
+  opacity: 1;
+}
+
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--darkgrey);
+  opacity: 0.7;
+}
+
+::-webkit-scrollbar-thumb:active {
+  background: var(--lightergrey);
 }
