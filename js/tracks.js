@@ -4,7 +4,7 @@ export const tracks = [
     info: "Your daily updates of the most played...",
     image: "./assets/card1img.jpeg",
     audio: "./assets/sample.mp3",
-    video: "./assets/song_video.mp4", // Added related video
+    video: null, // Added related video
   },
   {
     title: "Top 50 - India",

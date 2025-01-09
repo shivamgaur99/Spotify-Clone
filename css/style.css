@@ -95,7 +95,6 @@ body {
   border-radius: 0.5rem;
   overflow-y: hidden;
   height: 80vh;
-  padding: 0 1.5rem;
   overflow-x: hidden;
 }
 
@@ -860,6 +859,11 @@ a {
   background-color: rgba(255, 255, 255, 0.8);
 }
 
+#controlIcon {
+  width: 14px; 
+  object-fit: contain; 
+}
+
 .now-playing-view {
   position: relative;
   display: flex;
@@ -916,6 +920,16 @@ a {
   object-fit: cover;
   position: absolute;
   opacity: 0.7;
+  transition: opacity 0.3s ease;
+}
+
+.album-image {
+  position: absolute;
+  top: 70px;
+  width: 90%;
+  object-fit: cover;
+  display: block;
+  border-radius: 0.5rem;
   transition: opacity 0.3s ease;
 }
 

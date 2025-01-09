@@ -12,6 +12,7 @@ const nextButton = document.getElementById("next-button");
 const shuffleButton = document.getElementById("shuffle-button");
 const repeatButton = document.getElementById("repeat-button");
 const albumPicture = document.getElementById("album-picture");
+const albumImage = document.getElementById("album-image");
 const albumTitle = document.getElementById("album-title");
 const albumArtist = document.getElementById("album-artist");
 const albumIcon = document.getElementById("album-icon1");
@@ -303,6 +304,33 @@ albumIcon.addEventListener("click", () => {
 function updatePlayerUI(trackIndex) {
   const track = tracks[trackIndex];
 
+  const getFileName = (url) => {
+    if (!url) {
+      return "";
+    }
+    return url.split("/").pop();
+  };
+
+  if (getFileName(videoSource.src) !== getFileName(track.video)) {
+    videoSource.src = track.video || "";
+    trackVideo.load();
+  }
+  if (track.video && track.video.trim() !== "") {
+    // Video is valid, show video and hide album image
+    trackVideo.style.display = "block"; // Ensure video is visible
+    albumImage.style.display = "none"; // Hide album image
+  } else {
+    // Video is invalid or unavailable, show album image
+    trackVideo.style.display = "none"; // Hide video
+    albumImage.style.display = "block"; // Show album image
+  }
+
+  // Update album image, title, and artist info
+  albumImage.src = track.image || ""; // Fallback to empty string if image is missing
+
+  songTitle.textContent = track.title;
+  songInfo.textContent = track.info;
+
   // Update album picture, title, and artist info
   albumPicture.src = track.image;
   albumTitle.textContent = track.title;
@@ -343,21 +371,6 @@ function loadTrack() {
   //   trackVideo.load();
   // }
 
-  const getFileName = (url) => {
-    return url.split("/").pop();
-  };
-
-  if (
-    getFileName(videoSource.src) !==
-    getFileName(tracks[currentTrackIndex].video)
-  ) {
-    videoSource.src = tracks[currentTrackIndex].video || "";
-    trackVideo.load();
-  }
-
-  songTitle.textContent = tracks[currentTrackIndex].title;
-  songInfo.textContent = tracks[currentTrackIndex].info;
-
   // Update the play button based on the saved isPlaying state
   if (isPlaying) {
     playButton.src = "./assets/pause-button-icon.png";
@@ -371,7 +384,7 @@ function loadTrack() {
   trackVideo.loop = true;
 
   // Update volume from localStorage
-  let volume = parseFloat(localStorage.getItem("volume")) || 1.0;
+  let volume = parseFloat(localStorage.getItem("volume")) || 0;
   soundBar.value = volume * 100; // Set sound bar position
   currentAudio.volume = volume; // Set the audio element's volume
   const volumeProgress = soundBar.value;
