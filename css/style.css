@@ -16,7 +16,17 @@ body {
   color: #fff;
   overflow: hidden;
   scrollbar-width: thin; 
+  user-select: none; /* Disable text selection */
+  -webkit-user-select: none; /* For Safari/Chrome */
+  -ms-user-select: none; /* For older IE versions */
 }
+
+img {
+  /* pointer-events: none;  */
+  user-drag: none; /* Drag ko disable kare */
+  -webkit-user-drag: none; /* Safari ke liye */
+}
+
 
 .logo {
   width: 40px;
