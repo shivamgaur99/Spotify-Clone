@@ -21,6 +21,13 @@ export const tracks = [
     video: "./assets/videos/Watch_the_BIRDS_OF_A_FEATHER.mp4",
   },
   {
+    title: "Faded",
+    info: "Alan Walker",
+    image: "./assets/album/faded.png",
+    audio: "./assets/songs/faded.mp3",
+    video: null,
+  },
+  {
     title: "Die With A Smile",
     info: "Lady Gaga, Bruno Mars",
     image: "./assets/album/lady_gaga.png",
@@ -56,17 +63,17 @@ export const tracks = [
     video: "./assets/videos/Oo_Antava_Song___Pushpa_Song.mp4",
   },
   {
-    title: "Round and Round",
-    info: "Free Bird",
-    image: "./assets/album/round_and_round.png",
-    audio: "./assets/songs/mingle_song.mp3",
-    video: "./assets/videos/Squid_Game_S2_Song___Mingle_Song___Round___Round___Ring-a-Ring.mp4",
-  },
-  {
     title: "Jo Tum Mere Ho",
     info: "Anuv Jain",
     image: "./assets/album/jo_tum_mere_ho.png",
     audio: "./assets/songs/jo_tum_mere_ho.mp3",
     video: "./assets/videos/Jo_Tum_mere_ho_–_Anuv_Jain.mp4",
+  },
+  {
+    title: "Round and Round",
+    info: "Free Bird",
+    image: "./assets/album/round_and_round.png",
+    audio: "./assets/songs/mingle_song.mp3",
+    video: "./assets/videos/Squid_Game_S2_Song___Mingle_Song___Round___Round___Ring-a-Ring.mp4",
   },
 ];
