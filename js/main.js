@@ -384,7 +384,7 @@ function loadTrack() {
   trackVideo.loop = true;
 
   // Update volume from localStorage
-  let volume = parseFloat(localStorage.getItem("volume")) || 0;
+  let volume = parseFloat(localStorage.getItem("volume")) || 1;
   soundBar.value = volume * 100; // Set sound bar position
   currentAudio.volume = volume; // Set the audio element's volume
   const volumeProgress = soundBar.value;
