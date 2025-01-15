@@ -113,7 +113,10 @@
                   <span>Liked Songs</span>
                 </li>
                 <li class="library-item">
-                  <img src="./assets/album/taylor_swift.png" alt="Taylor Swift" />
+                  <img
+                    src="./assets/album/taylor_swift.png"
+                    alt="Taylor Swift"
+                  />
                   <span>Taylor Swift</span>
                 </li>
                 <li class="library-item">
@@ -125,39 +128,60 @@
                   <span>Alan Walker</span>
                 </li>
                 <li class="library-item">
-                  <img src="./assets/album/sabrina_carpenter.png" alt="Sabrina Carpenter" />
+                  <img
+                    src="./assets/album/sabrina_carpenter.png"
+                    alt="Sabrina Carpenter"
+                  />
                   <span>Sabrina Carpenter</span>
                 </li>
                 <li class="library-item">
-                  <img src="./assets/album/billie_eilish.png" alt="Billie Eilish" />
+                  <img
+                    src="./assets/album/billie_eilish.png"
+                    alt="Billie Eilish"
+                  />
                   <span>Billie Eilish</span>
                 </li>
                 <li class="library-item">
-                  <img src="./assets/album/imagine_dragons.png" alt="Imagine Dragons" />
+                  <img
+                    src="./assets/album/imagine_dragons.png"
+                    alt="Imagine Dragons"
+                  />
                   <span>Imagine Dragons</span>
                 </li>
                 <li class="library-item">
-                  <img src="./assets/album/ariana_grande.png" alt="Ariana Grande" />
+                  <img
+                    src="./assets/album/ariana_grande.png"
+                    alt="Ariana Grande"
+                  />
                   <span>Ariana Grande</span>
                 </li>
                 <li class="library-item">
-                  <img src="./assets/album/shreya_ghoshal.png" alt="Shreya Ghoshal" />
+                  <img
+                    src="./assets/album/shreya_ghoshal.png"
+                    alt="Shreya Ghoshal"
+                  />
                   <span>Shreya Ghoshal</span>
                 </li>
                 <li class="library-item">
-                  <img src="./assets/album/arijit_singh.png" alt="Arijit Singh" />
+                  <img
+                    src="./assets/album/arijit_singh.png"
+                    alt="Arijit Singh"
+                  />
                   <span>Arijit Singh</span>
                 </li>
                 <li class="library-item">
-                  <img src="./assets/album/diljit_dosanjh.png" alt="Diljit Dosanjh" />
+                  <img
+                    src="./assets/album/diljit_dosanjh.png"
+                    alt="Diljit Dosanjh"
+                  />
                   <span>Diljit Dosanjh</span>
                 </li>
-              </ul>              
+              </ul>
               <ul class="playlist-list">
                 <!-- <li class="library-item">
                   <img src="./assets/playlist1.jpg" alt="Playlist 1" />
                   <span>Playlist 1</span>
-                </li> -->          
+                </li> -->
                 <!-- More playlists -->
               </ul>
             </div>
@@ -165,9 +189,8 @@
         </div>
         <div class="resize-handle"></div>
       </div>
-      
-      <div class="main-content">
 
+      <div class="main-content">
         <!-- <div class="islogin">
           <h2>Recently Played</h2>
           <div class="cards-container">
@@ -223,7 +246,7 @@
           <i class="fa fa-times"></i>
           <!-- Font Awesome close icon -->
         </button>
-      
+
         <!-- Video Container -->
         <div class="video-container">
           <video id="track-video" autoplay loop muted class="song-video">
@@ -232,31 +255,25 @@
           </video>
           <img id="album-image" class="album-image" />
         </div>
-      
+
         <!-- Song Information Section -->
         <div class="song-details">
           <h3 id="song-title" class="song-title"></h3>
           <p id="song-info" class="song-info"></p>
         </div>
-      
+
         <div class="playing-view-resize-handle"></div>
       </div>
-       <div class="music-player">
+    </div>
+    <div class="music-player">
       <div class="album">
-        <img
-          id="album-picture"
-          style="width: 56px; height: 56px;"
-        />
+        <img id="album-picture" style="width: 56px; height: 56px; margin-left: 10px;" />
         <div class="album-info">
-          <p id="album-title" style="font-size: 14px; font-weight: 600">
-            
-          </p>
+          <p id="album-title" style="font-size: 14px; font-weight: 600"></p>
           <p
             id="album-artist"
             style="font-size: 12px; opacity: 0.75; line-height: 0"
-          >
-            
-          </p>
+          ></p>
         </div>
         <i
           id="album-icon1"
@@ -339,12 +356,13 @@
           class="control-icon hide"
         />
       </div>
-    </div> 
     </div>
     <!-- Disable Right-Click  -->
     <script>
-      document.addEventListener("contextmenu", (event) => event.preventDefault());
-    </script>    
+      document.addEventListener("contextmenu", (event) =>
+        event.preventDefault()
+      );
+    </script>
     <script src="js/login.js"></script>
     <script type="module" src="js/main.js"></script>
     <script type="module" src="js/sidebar-resize.js"></script>
