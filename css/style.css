@@ -14,7 +14,7 @@ body {
   margin: 0;
   background-color: #000000;
   color: #fff;
-  overflow: hidden;
+  overflow-x: hidden;
   scrollbar-width: thin;
   user-select: none; /* Disable text selection */
   -webkit-user-select: none; /* For Safari/Chrome */
@@ -103,14 +103,18 @@ img {
   background-color: #26262670;
   flex: 1;
   border-radius: 0.5rem;
-  overflow-y: hidden;
+  overflow-y: auto;
   height: 80vh;
   overflow-x: hidden;
 }
 
-.main-content:hover {
-  overflow-y: auto;
-}
+.main-content::-webkit-scrollbar {
+  display: none;
+} 
+
+.main-content:hover::-webkit-scrollbar {
+  display: block;
+} 
 
 .main-content h2 {
   margin-left: 1.8rem;
@@ -721,7 +725,7 @@ a {
   }
 
   .sidebar {
-    width: 80px;
+    width: 75px;
     padding: 0;
   }
 
@@ -765,6 +769,51 @@ a {
 
   .card-info {
     font-size: 0.7rem;
+  }
+
+  .play-icon {
+    width: 40px;
+    height: 40px;
+    bottom: 105px;
+    right: 20px;
+  }
+
+  .play-icon i {
+    font-size: 16px;
+  }
+
+  .album-info,
+  .album-artist {
+    display: none;
+  }
+}
+
+@media (max-width: 380px) {
+  .sidebar {
+    width: 75px;
+    padding: 0;
+  }
+  .card {
+    width: 80px;
+  }
+
+  .card-title {
+    font-size: 10px;
+  }
+
+  .card-info {
+    font-size: 0.5rem;
+  }
+
+  .play-icon {
+    width: 30px;
+    height: 30px;
+    bottom: 95px;
+    right: 15px;
+  }
+
+  .play-icon i {
+    font-size: 12px;
   }
 
   .album-info,
@@ -1051,4 +1100,23 @@ a {
 
 ::-webkit-scrollbar-thumb:active {
   background: var(--lightergrey);
+}
+
+/* Hide scrollbar on mobile devices */
+@media (max-width: 768px) {
+  /* Hide scrollbar in Webkit-based browsers (Chrome, Safari) */
+  ::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Enable scrolling */
+  body {
+    overflow: scroll; 
+  }
+
+  /* For Firefox */
+  body {
+    scrollbar-width: thin; /* Optional: makes the scrollbar thin */
+    scrollbar-color: transparent transparent; /* Hide the scrollbar */
+  }
 }
