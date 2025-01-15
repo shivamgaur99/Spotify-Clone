@@ -26,7 +26,7 @@ const songInfo = document.getElementById("song-info");
 
 let activePlayPauseButton = null;
 
-const tracksPerScroll = 1;
+const tracksPerScroll = window.innerWidth <= 768 ? 1 : 3;
 
 function generateCards() {
   carousel.innerHTML = "";
@@ -92,6 +92,33 @@ function generateCards() {
 
   updateButtons();
 }
+
+let startX = 0;
+let startY = 0;
+
+carousel.addEventListener("touchstart", (e) => {
+  const touchStart = e.touches[0];
+  startX = touchStart.clientX;
+  startY = touchStart.clientY;
+});
+
+carousel.addEventListener("touchend", (e) => {
+  const touchEnd = e.changedTouches[0];
+  const deltaX = touchEnd.clientX - startX;
+  const deltaY = touchEnd.clientY - startY;
+
+  // If the swipe is horizontal (more than vertical), trigger next or prev
+  if (Math.abs(deltaX) > Math.abs(deltaY)) {
+    if (deltaX > 50) {
+      // Swipe right (previous)
+      prevBtn.click();
+    } else if (deltaX < -50) {
+      // Swipe left (next)
+      nextBtn.click();
+    }
+  }
+});
+
 
 // Scroll carousel to the next set of cards
 nextBtn.addEventListener("click", () => {
@@ -572,3 +599,5 @@ function formatTime(seconds) {
     .padStart(2, "0");
   return `${mins}:${secs}`;
 }
+
+

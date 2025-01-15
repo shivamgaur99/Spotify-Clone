@@ -3,6 +3,16 @@ const controlIcon = document.getElementById('controlIcon');
 const playingView = document.getElementById('playingView');
 const closeBtn = document.getElementById('close-playing-view');
 
+
+const isSmallDevice = window.innerWidth <= 600; // Check if the device is small
+
+// Initially hide the playing view on small devices
+if (isSmallDevice) {
+  playingView.classList.add('hidden');
+} else {
+  playingView.classList.remove('hidden');
+}
+
 controlIcon.addEventListener('click', () => {
   playingView.classList.toggle('hidden'); 
   if (playingView.classList.contains('hidden')) {
